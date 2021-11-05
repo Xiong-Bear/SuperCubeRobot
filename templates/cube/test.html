@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+ <script>
+            $(document).ready(function() {
+                $('#ajax').submit(function(e) {
+                    e.preventDefault();  // disables submit's default action
+                    var data = new FormData($('#ajax').get(0));
+                    alert(data);
+
+                    $.ajax({
+                        url: '../upload/',
+                        type: 'POST',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            data = JSON.parse(data); // converts string of json to object
+                            $('#photo').html('<img src="'+data.url+ '" />');
+                            // <h2>title</h2> You do not use 'title' in your project !!
+                            // alt=title see previous comment
+                        }
+                    });
+                    return false;
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+        <form method="POST" id="ajax">
+            {% csrf_token %}
+            Img:
+            <br />
+            <input type="file" name="image" />
+            <br />
+            <br />
+            <button id="submit"  type="submit">Add</button>
+        </form>
+
+        <h1> test </h1>
+        <div id="photo"></div>
+    </body>
+</body>
+</html>

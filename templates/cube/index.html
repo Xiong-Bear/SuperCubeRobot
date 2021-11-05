@@ -1,0 +1,563 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SuperCubeRobot</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<a href="upload/" >upload</a>
+{#<body topmargin="50px">#}
+{##}
+{#<table align="center" border="1">#}
+{#    <tr>#}
+{#        <td>#}
+{#            <p>A:绿色块中心向前,白色中心块向上</p>#}
+{#            <video id="v1" style="width: 250px;height: 250px;"></video>#}
+{#            <img id="p1" style="width: 250px;height: 250px; display: none;" src="" />#}
+{#            <br/>#}
+{#            <button id="take1">拍摄</button>#}
+{#            <form id="f1"  method="POST">#}
+{#              {% csrf_token %}#}
+{#              <input type="file" name="image" id="m1" hidden>#}
+{#              <button type="submit" id="up1">识别</button>#}
+{#            </form>#}
+{#        </td>#}
+{#        <td>#}
+{#            <p>B:红色块中心向前,白色中心块向上</p>#}
+{#            <video id="v2" style="width: 250px;height: 250px;"></video>#}
+{#            <img id="p2" style="width: 250px;height: 250px; display: none;" src=""/>#}
+{#            <br/>#}
+{#            <button id="take2">拍摄</button>#}
+{#            <form id="f2">#}
+{#              {% csrf_token %}#}
+{#              <input type="file" name="image" hidden>#}
+{#              <button type="submit" id="up2">识别</button>#}
+{#            </form>#}
+{#        </td>#}
+{#        <td>#}
+{#            <p>C:橙色块中心向前,白色中心块向上</p>#}
+{#            <video id="v3" style="width: 250px;height: 250px;"></video>#}
+{#            <img id="p3" style="width: 250px;height: 250px; display: none;" src=""/>#}
+{#            <br/>#}
+{#            <button id="take3">拍摄</button>#}
+{#            <form id="f3">#}
+{#              {% csrf_token %}#}
+{#              <input type="file" name="image" hidden>#}
+{#              <button type="submit" id="up3">识别</button>#}
+{#            </form>#}
+{#        </td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td><button id="take1">拍摄</button><button id="up1">识别</button></td>#}
+{#        <td><button id="take2">拍摄</button><button id="up2">识别</button></td>#}
+{#        <td><button id="take3">拍摄</button><button id="up3">识别</button></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>#}
+{#            <p>D:蓝色块中心向前,黄色中心块向上</p>#}
+{#            <video id="v4" style="width: 250px;height: 250px;"></video>#}
+{#            <img id="p4" style="width: 250px;height: 250px; display: none;" src=""/>#}
+{#            <br/>#}
+{#            <button id="take4">拍摄</button>#}
+{#            <form id="f4">#}
+{#              {% csrf_token %}#}
+{#              <input type="file" name="image" hidden>#}
+{##}
+{#              <button type="submit" id="up4">识别</button>#}
+{#            </form>#}
+{#        </td>#}
+{#        <td>#}
+{#            <p>E:黄色块中心向前,绿色中心块向上</p>#}
+{#            <video id="v5" style="width: 250px;height: 250px;"></video>#}
+{#            <img id="p5" style="width: 250px;height: 250px; display: none;" src=""/>#}
+{#            <br/>#}
+{#            <button id="take5">拍摄</button>#}
+{#            <form id="f5">#}
+{#              {% csrf_token %}#}
+{#              <input type="file" name="image" hidden>#}
+{##}
+{#              <button type="submit" id="up5">识别</button>#}
+{#            </form>#}
+{#        </td>#}
+{#        <td>#}
+{#            <p>F:白色块中心向前,蓝色中心块向上</p>#}
+{#            <video id="v6" style="width: 250px;height: 250px;"></video>#}
+{#            <img id="p6" style="width: 250px;height: 250px; display: none;" src=""/>#}
+{#            <br/>#}
+{#            <button id="take6">拍摄</button>#}
+{#            <form id="f6">#}
+{#              {% csrf_token %}#}
+{#              <input type="file" name="image" hidden>#}
+{##}
+{#              <button type="submit" id="up6">识别</button>#}
+{#            </form>#}
+{#        </td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td><button id="take4">拍摄</button><button id="up4">识别</button></td>#}
+{#        <td><button id="take5">拍摄</button><button id="up5">识别</button></td>#}
+{#        <td><button id="take6">拍摄</button><button id="up6">识别</button></td>#}
+{#    </tr>#}
+{##}
+{#</table>#}
+{##}
+{#    <canvas id="canvas" style="display:none;"></canvas>#}
+{#	<button onClick="saveFile(filename);" type="button">下载图片</button>#}
+{#    <br />#}
+{#<div id="show"></div>#}
+{#    <img style="width: 250px;height: 250px;  ;" src="http://placehold.it/640&text=Your%20image%20here%20..." id="photo" alt="photo">#}
+{#<script>#}
+    {#document.getElementById('canvas').hidden;#}
+{#    !(function () {#}
+{#        // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象#}
+{#        if (navigator.mediaDevices === undefined) {#}
+{#            navigator.mediaDevices = {};#}
+{#        }#}
+{#        if (navigator.mediaDevices.getUserMedia === undefined) {#}
+{#            navigator.mediaDevices.getUserMedia = function (constraints) {#}
+{#                // 首先，如果有getUserMedia的话，就获得它#}
+{#                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;#}
+{##}
+{#                // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口#}
+{#                if (!getUserMedia) {#}
+{#                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));#}
+{#                }#}
+{##}
+{#                // 否则，为老的navigator.getUserMedia方法包裹一个Promise#}
+{#                return new Promise(function (resolve, reject) {#}
+{#                    getUserMedia.call(navigator, constraints, resolve, reject);#}
+{#                });#}
+{#            }#}
+{#        }#}
+{#        const constraints = {#}
+{#            video: true,#}
+{#            audio: false#}
+{#        };#}
+{#        let videoPlaying = false;#}
+{#        let v = document.getElementById('v1');#}
+{#        let promise = navigator.mediaDevices.getUserMedia(constraints);#}
+{#        promise.then(stream => {#}
+{#            // 旧的浏览器可能没有srcObject#}
+{#            if ("srcObject" in v) {#}
+{#                v.srcObject = stream;#}
+{#            } else {#}
+{#                // 防止再新的浏览器里使用它，应为它已经不再支持了#}
+{#                v.src = window.URL.createObjectURL(stream);#}
+{#            }#}
+{#            v.onloadedmetadata = function (e) {#}
+{#                v.play();#}
+{#                videoPlaying = true;#}
+{#            };#}
+{#        }).catch(err => {#}
+{#            console.error(err.name + ": " + err.message);#}
+{#        });#}
+{##}
+{#        document.getElementById('take1').addEventListener('click', function () {#}
+{#            if(document.getElementById('take1').innerText === '重拍'){#}
+{#                document.getElementById('take1').innerText = '拍摄';#}
+{#                 document.getElementById('v1').style.display = 'block';#}
+{#                 document.getElementById('p1').style.display = 'none';#}
+{#            }#}
+{#            else if (videoPlaying) {#}
+{#                document.getElementById('take1').innerText = '重拍';#}
+{#                let canvas = document.getElementById('canvas');#}
+{#                canvas.width = v.videoWidth;#}
+{#                canvas.height = v.videoHeight;#}
+{#                canvas.getContext('2d').drawImage(v1, 0, 0);#}
+{#                let data = canvas.toDataURL('images/jpg');#}
+{#                document.getElementById('v1').style.display = 'none';#}
+{#                document.getElementById('p1').setAttribute('src', data);#}
+{#                document.getElementById('p1').style.display = 'block'#}
+{#            }#}
+{#        }, false);#}
+{#    })();#}
+{##}
+{#    $(document).ready(function() {#}
+{#        $('#up1').click(function(e) {#}
+{#            e.preventDefault();  // disables submit's default action#}
+{#            var imgData = canvas.toDataURL("images/jpg");#}
+            {#imgData = imgData.replace(/^data:images\/(png|jpg);base64,/,"")#}
+{#            alert(imgData);#}
+{#            $.ajax({#}
+{#                url: '../upload/',#}
+{#                type: 'POST',#}
+{#                data: imgData,#}
+{#                contentType:false,#}
+{#                processData:false,#}
+{#                timeout:10000,//设置超时#}
+{#                async: true,#}
+{#                success: function(data) {#}
+{#                    data = JSON.parse(data); // converts string of json to object#}
+{#                    $('#show').html('<img src="'+data.url+ '" />');#}
+{#                }#}
+{#            });#}
+{#            return false;#}
+{#        });#}
+{#    });#}
+{##}
+{#    </script>#}
+{#<script>#}
+{#    !(function () {#}
+{#        // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象#}
+{#        if (navigator.mediaDevices === undefined) {#}
+{#            navigator.mediaDevices = {};#}
+{#        }#}
+{#        if (navigator.mediaDevices.getUserMedia === undefined) {#}
+{#            navigator.mediaDevices.getUserMedia = function (constraints) {#}
+{#                // 首先，如果有getUserMedia的话，就获得它#}
+{#                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;#}
+{##}
+{#                // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口#}
+{#                if (!getUserMedia) {#}
+{#                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));#}
+{#                }#}
+{##}
+{#                // 否则，为老的navigator.getUserMedia方法包裹一个Promise#}
+{#                return new Promise(function (resolve, reject) {#}
+{#                    getUserMedia.call(navigator, constraints, resolve, reject);#}
+{#                });#}
+{#            }#}
+{#        }#}
+{#        const constraints = {#}
+{#            video: true,#}
+{#            audio: false#}
+{#        };#}
+{#        let videoPlaying = false;#}
+{#        let v = document.getElementById('v2');#}
+{#        let promise = navigator.mediaDevices.getUserMedia(constraints);#}
+{#        promise.then(stream => {#}
+{#            // 旧的浏览器可能没有srcObject#}
+{#            if ("srcObject" in v) {#}
+{#                v.srcObject = stream;#}
+{#            } else {#}
+{#                // 防止再新的浏览器里使用它，应为它已经不再支持了#}
+{#                v.src = window.URL.createObjectURL(stream);#}
+{#            }#}
+{#            v.onloadedmetadata = function (e) {#}
+{#                v.play();#}
+{#                videoPlaying = true;#}
+{#            };#}
+{#        }).catch(err => {#}
+{#            console.error(err.name + ": " + err.message);#}
+{#        })#}
+{##}
+{#        document.getElementById('take2').addEventListener('click', function () {#}
+{#            if(document.getElementById('take2').innerText === '重拍'){#}
+{#                document.getElementById('take2').innerText = '拍摄';#}
+{#                 document.getElementById('v2').style.display = 'block';#}
+{#                 document.getElementById('p2').style.display = 'none';#}
+{#            }#}
+{#            else if (videoPlaying) {#}
+{#                document.getElementById('take2').innerText = '重拍';#}
+{#                let canvas = document.getElementById('canvas');#}
+{#                canvas.width = v.videoWidth;#}
+{#                canvas.height = v.videoHeight;#}
+{#                canvas.getContext('2d').drawImage(v2, 0, 0);#}
+{#                let data = canvas.toDataURL('images/webp');#}
+{#                document.getElementById('v2').style.display = 'none';#}
+{#                document.getElementById('p2').setAttribute('src', data);#}
+{#                document.getElementById('p2').style.display = 'block'#}
+{#            }#}
+{#        }, false);#}
+{#    })();#}
+{##}
+{#    </script>#}
+{#<script>#}
+{#        !(function () {#}
+{#            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象#}
+{#            if (navigator.mediaDevices === undefined) {#}
+{#                navigator.mediaDevices = {};#}
+{#            }#}
+{#            if (navigator.mediaDevices.getUserMedia === undefined) {#}
+{#                navigator.mediaDevices.getUserMedia = function (constraints) {#}
+{#                    // 首先，如果有getUserMedia的话，就获得它#}
+{#                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;#}
+{##}
+{#                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口#}
+{#                    if (!getUserMedia) {#}
+{#                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));#}
+{#                    }#}
+{##}
+{#                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise#}
+{#                    return new Promise(function (resolve, reject) {#}
+{#                        getUserMedia.call(navigator, constraints, resolve, reject);#}
+{#                    });#}
+{#                }#}
+{#            }#}
+{#            const constraints = {#}
+{#                video: true,#}
+{#                audio: false#}
+{#            };#}
+{#            let videoPlaying = false;#}
+{#            let v = document.getElementById('v3');#}
+{#            let promise = navigator.mediaDevices.getUserMedia(constraints);#}
+{#            promise.then(stream => {#}
+{#                // 旧的浏览器可能没有srcObject#}
+{#                if ("srcObject" in v) {#}
+{#                    v.srcObject = stream;#}
+{#                } else {#}
+{#                    // 防止再新的浏览器里使用它，应为它已经不再支持了#}
+{#                    v.src = window.URL.createObjectURL(stream);#}
+{#                }#}
+{#                v.onloadedmetadata = function (e) {#}
+{#                    v.play();#}
+{#                    videoPlaying = true;#}
+{#                };#}
+{#            }).catch(err => {#}
+{#                console.error(err.name + ": " + err.message);#}
+{#            })#}
+{##}
+{#            document.getElementById('take3').addEventListener('click', function () {#}
+{#                if(document.getElementById('take3').innerText === '重拍'){#}
+{#                document.getElementById('take3').innerText = '拍摄';#}
+{#                 document.getElementById('v3').style.display = 'block';#}
+{#                 document.getElementById('p3').style.display = 'none';#}
+{#            }#}
+{#            else if (videoPlaying) {#}
+{#                document.getElementById('take3').innerText = '重拍';#}
+{#                    let canvas = document.getElementById('canvas');#}
+{#                    canvas.width = v.videoWidth;#}
+{#                    canvas.height = v.videoHeight;#}
+{#                    canvas.getContext('2d').drawImage(v3, 0, 0);#}
+{#                    let data = canvas.toDataURL('images/webp');#}
+{#                    document.getElementById('v3').style.display = 'none';#}
+{#                document.getElementById('p3').setAttribute('src', data);#}
+{#                document.getElementById('p3').style.display = 'block'#}
+{#                }#}
+{#            }, false);#}
+{#        })();#}
+{##}
+{#        </script>#}
+{#<script>#}
+{#        !(function () {#}
+{#            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象#}
+{#            if (navigator.mediaDevices === undefined) {#}
+{#                navigator.mediaDevices = {};#}
+{#            }#}
+{#            if (navigator.mediaDevices.getUserMedia === undefined) {#}
+{#                navigator.mediaDevices.getUserMedia = function (constraints) {#}
+{#                    // 首先，如果有getUserMedia的话，就获得它#}
+{#                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;#}
+{##}
+{#                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口#}
+{#                    if (!getUserMedia) {#}
+{#                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));#}
+{#                    }#}
+{##}
+{#                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise#}
+{#                    return new Promise(function (resolve, reject) {#}
+{#                        getUserMedia.call(navigator, constraints, resolve, reject);#}
+{#                    });#}
+{#                }#}
+{#            }#}
+{#            const constraints = {#}
+{#                video: true,#}
+{#                audio: false#}
+{#            };#}
+{#            let videoPlaying = false;#}
+{#            let v = document.getElementById('v4');#}
+{#            let promise = navigator.mediaDevices.getUserMedia(constraints);#}
+{#            promise.then(stream => {#}
+{#                // 旧的浏览器可能没有srcObject#}
+{#                if ("srcObject" in v) {#}
+{#                    v.srcObject = stream;#}
+{#                } else {#}
+{#                    // 防止再新的浏览器里使用它，应为它已经不再支持了#}
+{#                    v.src = window.URL.createObjectURL(stream);#}
+{#                }#}
+{#                v.onloadedmetadata = function (e) {#}
+{#                    v.play();#}
+{#                    videoPlaying = true;#}
+{#                };#}
+{#            }).catch(err => {#}
+{#                console.error(err.name + ": " + err.message);#}
+{#            })#}
+{##}
+{#            document.getElementById('take4').addEventListener('click', function () {#}
+{#                if(document.getElementById('take4').innerText === '重拍'){#}
+{#                document.getElementById('take4').innerText = '拍摄';#}
+{#                 document.getElementById('v4').style.display = 'block';#}
+{#                 document.getElementById('p4').style.display = 'none';#}
+{#            }#}
+{#            else if (videoPlaying) {#}
+{#                document.getElementById('take4').innerText = '重拍';#}
+{#                    let canvas = document.getElementById('canvas');#}
+{#                    canvas.width = v.videoWidth;#}
+{#                    canvas.height = v.videoHeight;#}
+{#                    canvas.getContext('2d').drawImage(v4, 0, 0);#}
+{#                    let data = canvas.toDataURL('images/webp');#}
+{#                    document.getElementById('v4').style.display = 'none';#}
+{#                document.getElementById('p4').setAttribute('src', data);#}
+{#                document.getElementById('p4').style.display = 'block'#}
+{#                }#}
+{#            }, false);#}
+{#        })();#}
+{##}
+{#        </script>#}
+{#<script>#}
+{#        !(function () {#}
+{#            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象#}
+{#            if (navigator.mediaDevices === undefined) {#}
+{#                navigator.mediaDevices = {};#}
+{#            }#}
+{#            if (navigator.mediaDevices.getUserMedia === undefined) {#}
+{#                navigator.mediaDevices.getUserMedia = function (constraints) {#}
+{#                    // 首先，如果有getUserMedia的话，就获得它#}
+{#                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;#}
+{##}
+{#                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口#}
+{#                    if (!getUserMedia) {#}
+{#                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));#}
+{#                    }#}
+{##}
+{#                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise#}
+{#                    return new Promise(function (resolve, reject) {#}
+{#                        getUserMedia.call(navigator, constraints, resolve, reject);#}
+{#                    });#}
+{#                }#}
+{#            }#}
+{#            const constraints = {#}
+{#                video: true,#}
+{#                audio: false#}
+{#            };#}
+{#            let videoPlaying = false;#}
+{#            let v = document.getElementById('v5');#}
+{#            let promise = navigator.mediaDevices.getUserMedia(constraints);#}
+{#            promise.then(stream => {#}
+{#                // 旧的浏览器可能没有srcObject#}
+{#                if ("srcObject" in v) {#}
+{#                    v.srcObject = stream;#}
+{#                } else {#}
+{#                    // 防止再新的浏览器里使用它，应为它已经不再支持了#}
+{#                    v.src = window.URL.createObjectURL(stream);#}
+{#                }#}
+{#                v.onloadedmetadata = function (e) {#}
+{#                    v.play();#}
+{#                    videoPlaying = true;#}
+{#                };#}
+{#            }).catch(err => {#}
+{#                console.error(err.name + ": " + err.message);#}
+{#            })#}
+{##}
+{#            document.getElementById('take5').addEventListener('click', function () {#}
+{#               if(document.getElementById('take5').innerText === '重拍'){#}
+{#                document.getElementById('take5').innerText = '拍摄';#}
+{#                 document.getElementById('v5').style.display = 'block';#}
+{#                 document.getElementById('p5').style.display = 'none';#}
+{#            }#}
+{#            else if (videoPlaying) {#}
+{#                document.getElementById('take5').innerText = '重拍';#}
+{#                    let canvas = document.getElementById('canvas');#}
+{#                    canvas.width = v.videoWidth;#}
+{#                    canvas.height = v.videoHeight;#}
+{#                    canvas.getContext('2d').drawImage(v5, 0, 0);#}
+{#                    let data = canvas.toDataURL('images/webp');#}
+{#                    document.getElementById('v5').style.display = 'none';#}
+{#                document.getElementById('p5').setAttribute('src', data);#}
+{#                document.getElementById('p5').style.display = 'block'#}
+{#                }#}
+{#            }, false);#}
+{#        })();#}
+{##}
+{#        </script>#}
+{#<script>#}
+{#        !(function () {#}
+{#            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象#}
+{#            if (navigator.mediaDevices === undefined) {#}
+{#                navigator.mediaDevices = {};#}
+{#            }#}
+{#            if (navigator.mediaDevices.getUserMedia === undefined) {#}
+{#                navigator.mediaDevices.getUserMedia = function (constraints) {#}
+{#                    // 首先，如果有getUserMedia的话，就获得它#}
+{#                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;#}
+{##}
+{#                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口#}
+{#                    if (!getUserMedia) {#}
+{#                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));#}
+{#                    }#}
+{##}
+{#                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise#}
+{#                    return new Promise(function (resolve, reject) {#}
+{#                        getUserMedia.call(navigator, constraints, resolve, reject);#}
+{#                    });#}
+{#                }#}
+{#            }#}
+{#            const constraints = {#}
+{#                video: true,#}
+{#                audio: false#}
+{#            };#}
+{#            let videoPlaying = false;#}
+{#            let v = document.getElementById('v6');#}
+{#            let promise = navigator.mediaDevices.getUserMedia(constraints);#}
+{#            promise.then(stream => {#}
+{#                // 旧的浏览器可能没有srcObject#}
+{#                if ("srcObject" in v) {#}
+{#                    v.srcObject = stream;#}
+{#                } else {#}
+{#                    // 防止再新的浏览器里使用它，应为它已经不再支持了#}
+{#                    v.src = window.URL.createObjectURL(stream);#}
+{#                }#}
+{#                v.onloadedmetadata = function (e) {#}
+{#                    v.play();#}
+{#                    videoPlaying = true;#}
+{#                };#}
+{#            }).catch(err => {#}
+{#                console.error(err.name + ": " + err.message);#}
+{#            })#}
+{##}
+{#            document.getElementById('take6').addEventListener('click', function () {#}
+{#                if(document.getElementById('take6').innerText === '重拍'){#}
+{#                document.getElementById('take6').innerText = '拍摄';#}
+{#                 document.getElementById('v6').style.display = 'block';#}
+{#                 document.getElementById('p6').style.display = 'none';#}
+{#            }#}
+{#            else if (videoPlaying) {#}
+{#                document.getElementById('take6').innerText = '重拍';#}
+{#                    let canvas = document.getElementById('canvas');#}
+{#                    canvas.width = v.videoWidth;#}
+{#                    canvas.height = v.videoHeight;#}
+{#                    canvas.getContext('2d').drawImage(v6, 0, 0);#}
+{#                    let data = canvas.toDataURL('images/webp');#}
+{#                    document.getElementById('v6').style.display = 'none';#}
+{#                document.getElementById('p6').setAttribute('src', data);#}
+{#                document.getElementById('p6').style.display = 'block'#}
+{#                }#}
+{#            }, false);#}
+{#        })();#}
+{##}
+{#        </script>#}
+{##}
+{##}
+{#<script>#}
+{#		//下面的代码是保存canvas标签里的图片并且将其按一定的规则重命名#}
+{#			var type = 'png';#}
+{#			var _fixType = function(type) {#}
+{#		    type = type.toLowerCase().replace(/jpg/i, 'jpeg');#}
+{#		    var r = type.match(/png|jpeg|bmp|gif/)[0];#}
+{#		    return 'image/' + r;#}
+{#		};#}
+{#		/**#}
+{#		 * @param  {String} filename 文件名#}
+{#		 */#}
+{#			var saveFile = function(filename){#}
+{#			//获取canvas标签里的图片内容#}
+{#			var imgData = document.getElementById('canvas').toDataURL(type);#}
+{#			imgData = imgData.replace(_fixType(type),'image/octet-stream');#}
+{##}
+{#		    var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');#}
+{#		    save_link.href = imgData;#}
+{#		    save_link.download = filename;#}
+{##}
+{#		    var event = document.createEvent('MouseEvents');#}
+{#		    event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);#}
+{#		    save_link.dispatchEvent(event);#}
+{#		};#}
+{##}
+{#		// 下载后的文件名规则#}
+{#			var filename = (new Date()).getTime() + '.' + type;#}
+{##}
+{#    </script>#}
+{#</body>#}
+
+</html>
