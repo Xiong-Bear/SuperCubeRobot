@@ -1,19 +1,24 @@
+import ast
 import base64
 import os
 import time
-
+import ast
 import numpy
 from io import BytesIO
 from PIL import Image
 import re
 import base64
-
+import urllib.parse
 from django.core.files.base import ContentFile
 from django.views.decorators.csrf import csrf_exempt
 
 from SuperCubeRobot import settings
 from django.shortcuts import render
 from django.http import HttpResponse
+
+# # from cube.CFOPsolver import CubeSolver
+# from cube.solver import CubeSolver
+from .tools import getResults
 from .models import *
 import json
 import cv2
@@ -24,8 +29,57 @@ def index(request):
     # return HttpResponse("Hello, world. You're at the cube index.")
 
 
+@csrf_exempt
+def initState(request):
+    if request.method == 'POST':
+        if request.is_ajax():
+            with open('static/json/initState.json', 'r') as f:
+                result = json.load(f)
+            return HttpResponse(json.dumps(result))
+    return render(request, 'cube/show.html')
+
+
+@csrf_exempt
+def solve(request):
+    if request.method == 'POST':
+        if request.is_ajax():
+            data = request.body.decode()
+            data = urllib.parse.unquote(data)
+            # print(data)
+            data = data[7:-1].split(',')
+            # print("data:", data)
+            state = []
+            for i in data:
+                state.append(int(i))
+            print("input state:", state)
+            result = getResults(state)
+            print("complete!")
+            print("result form:", result)
+            return HttpResponse(json.dumps(result))
+        else:
+            print('null data')
+    return render(request, 'cube/show.html')
+
+
+# rev = request.form
+# print(rev)
+# print("computing...")
+# data = rev.to_dict()
+# state = []
+# data['state'] = ast.literal_eval(data['state'])
+# print(data['state'])
+# for i in data['state']:
+#     state.append(int(i))
+# result = getResults(state)
+# print("complete!")
+# return jsonify(result)
+
 def test(request):
     return render(request, 'cube/test.html')
+
+
+def show(request):
+    return render(request, 'cube/show.html')
 
 
 # def upload(request):
