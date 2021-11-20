@@ -52,8 +52,9 @@ def solve(request):
             for i in data:
                 state.append(int(i))
             print("input state:", state)
+            start = time.time()
             result = getResults(state)
-            print("complete!")
+            print("complete!", "time use :", time.time() - start)
             print("result form:", result)
             return HttpResponse(json.dumps(result))
         else:

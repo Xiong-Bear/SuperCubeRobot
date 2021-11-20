@@ -1,0 +1,7 @@
+/*
+* 	Owl Carousel Owl Theme 
+*	v1.3.2
+*/
+
+/* Minified css in demo only */
+.owl-theme .owl-controls{margin-top:10px;text-align:center}.owl-theme .owl-controls .owl-buttons div{color:#fff;display:inline-block;zoom:1;*display:inline;margin:5px;padding:3px 10px;font-size:12px;-webkit-border-radius:30px;-moz-border-radius:30px;border-radius:30px;background:#111;filter:alpha(opacity=50);opacity:.5}.owl-theme .owl-controls.clickable .owl-buttons div:hover{filter:alpha(opacity=100);opacity:1;text-decoration:none}.owl-theme .owl-controls .owl-page{display:inline-block;zoom:1;*display:inline}.owl-theme .owl-controls .owl-page span{border:1px solid #ccc;background:0 0;display:block;width:12px;height:12px;margin:0 4px;outline:0;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px}.owl-theme .owl-controls .owl-page.active span,.owl-theme .owl-controls.clickable .owl-page:hover span{background:#ccc}.owl-theme .owl-controls .owl-page span.owl-numbers{height:auto;width:auto;color:#fff;padding:2px 10px;font-size:12px;-webkit-border-radius:30px;-moz-border-radius:30px;border-radius:30px}.owl-item.loading{min-height:150px;background:url(../../templates/moban5822/static/image/loader.gif) no-repeat center center}

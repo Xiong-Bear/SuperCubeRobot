@@ -63,8 +63,8 @@ sqlparse==0.4.2
 tensorboard==1.8.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
-tensorflow==1.8.0
 tensorflow-estimator==2.6.0
+tensorflow-gpu==1.8.0
 termcolor==1.1.0
 tornado @ file:///C:/ci/tornado_1606942379977/work
 Twisted==20.3.0

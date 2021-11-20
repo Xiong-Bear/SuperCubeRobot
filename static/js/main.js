@@ -221,7 +221,7 @@ function solveCube() {
 			solution_text = response["solve_text"];
 			solution_text.push("SOLVED!");
 			setSolnText(true);
-
+			// disableInput();
 			moves = JSON.parse(JSON.stringify(solveMoves));
 
 			setTimeout(function(){nextState(500)}, 500);
