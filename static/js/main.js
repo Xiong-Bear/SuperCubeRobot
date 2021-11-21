@@ -210,7 +210,7 @@ function solveCube() {
 	document.getElementById("solution_text").innerHTML = "SOLVING...";
 	console.log(state);
 	$.ajax({
-		url: '../show/solve/',
+		url: '../advance/solve/',
 		data: {"state": JSON.stringify(state)},
 		type: 'POST',
 		dataType: 'json',
@@ -239,7 +239,7 @@ $( document ).ready($(function() {
 	disableInput();
 	clearSoln();
 	$.ajax({
-		url: '../show/initState/',
+		url: '../advance/initState/',
 		data: {},
 		type: 'POST',
 		dataType: 'json',

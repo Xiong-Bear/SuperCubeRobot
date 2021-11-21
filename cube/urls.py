@@ -6,9 +6,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('', index, name='index'),
-    path('show/', show, name='show'),
-    path('show/initState/', initState, name='initState'),
-    path('show/solve/', solve, name='solve'),
+    path('advance/', advance, name='advance'),
+    path('advance/initState/', initState, name='advance_initState'),
+    path('advance/solve/', solve, name='advance_solve'),
+    path('basic/', basic, name='basic'),
+    path('basic/initState/', basic_initState, name='basic_initState'),
+    path('basic/solve/', basic_solve, name='basic_solve'),
     path('upload/', upload, name='upload'),
     path('test/', test, name='test'),
 

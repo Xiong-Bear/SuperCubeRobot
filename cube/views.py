@@ -16,8 +16,7 @@ from SuperCubeRobot import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# # from cube.CFOPsolver import CubeSolver
-# from cube.solver import CubeSolver
+from cube.cfop.CFOPsolver import CubeSolver
 from .tools import getResults
 from .models import *
 import json
@@ -29,6 +28,51 @@ def index(request):
     # return HttpResponse("Hello, world. You're at the cube index.")
 
 
+def test(request):
+    return render(request, 'cube/test.html')
+
+
+def basic(request):
+    return render(request, 'cube/basic.html')
+
+
+@csrf_exempt
+def basic_initState(request):
+    if request.method == 'POST':
+        if request.is_ajax():
+            with open('static/json/initState.json', 'r') as f:
+                result = json.load(f)
+            return HttpResponse(json.dumps(result))
+    return render(request, 'cube/basic.html')
+
+
+@csrf_exempt
+def basic_solve(request):
+    if request.method == 'POST':
+        if request.is_ajax():
+            data = request.body.decode()
+            data = urllib.parse.unquote(data)
+            # print(data)
+            data = data[7:-1].split(',')
+            # print("data:", data)
+            state = []
+            for i in data:
+                state.append(int(i))
+            print("input state:", state)
+            start = time.time()
+            result = CubeSolver.getResults(state)
+            print("complete!", "time use :", time.time() - start)
+            print("result form:", result)
+            return HttpResponse(json.dumps(result))
+        else:
+            print('null data')
+    return render(request, 'cube/basic.html')
+
+
+def advance(request):
+    return render(request, 'cube/advance.html')
+
+
 @csrf_exempt
 def initState(request):
     if request.method == 'POST':
@@ -36,7 +80,7 @@ def initState(request):
             with open('static/json/initState.json', 'r') as f:
                 result = json.load(f)
             return HttpResponse(json.dumps(result))
-    return render(request, 'cube/show.html')
+    return render(request, 'cube/advance.html')
 
 
 @csrf_exempt
@@ -59,7 +103,7 @@ def solve(request):
             return HttpResponse(json.dumps(result))
         else:
             print('null data')
-    return render(request, 'cube/show.html')
+    return render(request, 'cube/advance.html')
 
 
 # rev = request.form
@@ -74,13 +118,6 @@ def solve(request):
 # result = getResults(state)
 # print("complete!")
 # return jsonify(result)
-
-def test(request):
-    return render(request, 'cube/test.html')
-
-
-def show(request):
-    return render(request, 'cube/show.html')
 
 
 # def upload(request):

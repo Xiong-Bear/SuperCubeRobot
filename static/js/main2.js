@@ -1,3 +1,4 @@
+
 var state = [];
 var rotateIdxs_old = null;
 var rotateIdxs_new = null;
@@ -178,13 +179,14 @@ function nextState(moveTimeout=0) {
 		disableInput();
 		disableScroll();
 		move = moves.shift() // get Move
-
+		
 		//convert to python representation
 		state_rep = reOrderArray(state,FEToState)
 		newState_rep = JSON.parse(JSON.stringify(state_rep))
 
 		//swap stickers
 		for (var i = 0; i < rotateIdxs_new[move].length; i++) {
+		// for (var i = 0; i < 4; i++) {
 			newState_rep[rotateIdxs_new[move][i]] = state_rep[rotateIdxs_old[move][i]]
 		}
 
@@ -240,7 +242,7 @@ function solveCube() {
 	clearSoln();
 	document.getElementById("solution_text").innerHTML = "SOLVING..."
 	$.ajax({
-		url: '../show/solve/',
+		url: '../basic/solve/',
 		data: {"state": JSON.stringify(state)},
 		type: 'POST',
 		dataType: 'json',
@@ -258,8 +260,8 @@ function solveCube() {
 		},
 		error: function(error) {
 				console.log(error);
-				document.getElementById("solution_text").innerHTML = "..."
-				setTimeout(function(){solveCube()}, 500);
+				// document.getElementById("solution_text").innerHTML = "..."
+				// setTimeout(function(){solveCube()}, 500);
 		},
 	});
 }
@@ -269,7 +271,7 @@ function nextStateTest(moveTimeout=0) {
 		disableInput();
 		disableScroll();
 		move = moves.shift() // get Move
-
+		
 		//convert to python representation
 		state_rep = reOrderArray(state,FEToState)
 		newState_rep = JSON.parse(JSON.stringify(state_rep))
@@ -335,7 +337,7 @@ async function solveCubeTest() {
 	document.getElementById("solution_text").innerHTML = "SOLVING..."
 	return new Promise(function(resolve, reject) {
 		$.ajax({
-			url: '../show/solve/',
+			url: '../basic/solve/',
 			data: {"state": JSON.stringify(state)},
 			type: 'POST',
 			dataType: 'json',
@@ -346,9 +348,9 @@ async function solveCubeTest() {
 				solution_text = response["solve_text"];
 				solution_text.push("SOLVED!")
 				setSolnText(true);
-
+	
 				moves = JSON.parse(JSON.stringify(solveMoves))
-
+	
 				resolve()
 			},
 			error: function(error) {
@@ -385,7 +387,7 @@ $( document ).ready($(function() {
 	disableInput();
 	clearSoln();
 	$.ajax({
-		url: '../show/initState/',
+		url: '../basic/initState/',
 		data: {},
 		type: 'POST',
 		dataType: 'json',
@@ -403,7 +405,7 @@ $( document ).ready($(function() {
 		},
 	});
 
-	$("#cube").css("transform", "translateZ( -100px) rotateX( " + rotX + "deg) rotateY(" + rotY + "deg)"); //Initial orientation
+	$("#cube").css("transform", "translateZ( -100px) rotateX( " + rotX + "deg) rotateY(" + rotY + "deg)"); //Initial orientation	
 
 	$('#scramble').click(function() {
 		scrambleCube()
@@ -444,7 +446,7 @@ $( document ).ready($(function() {
 		avgTime /= casenum;
 		console.log(casenum.toString()+" cases finished: success "+success.toString()+", fail "+failed.toString()+", average solving time "+avgTime.toString()+"ms.");
 	});
-
+	
 
 	$('#first_state').click(function() {
 		if (solveIdx > 0) {
@@ -506,4 +508,3 @@ function mouseMoved(ev) {
 
   $("#cube").css("transform", "translateZ( -100px) rotateX( " + rotX + "deg) rotateY(" + rotY + "deg)");
 }
-
