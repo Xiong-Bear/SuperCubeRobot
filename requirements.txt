@@ -13,10 +13,10 @@ clang==5.0
 click==8.0.3
 constantly==15.1.0
 cycler==0.10.0
-dataclasses @ file:///tmp/build/80754af9/dataclasses_1614363715916/work
+
 Django==3.2.9
 dm-sonnet==1.11
-Flask @ file:///tmp/build/80754af9/flask_1634118196080/work
+
 flatbuffers==1.12
 gast==0.4.0
 google-auth==1.35.0
@@ -29,31 +29,30 @@ hyperlink==21.0.0
 idna==3.3
 importlib-metadata==4.8.2
 incremental==21.3.0
-itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
-Jinja2 @ file:///tmp/build/80754af9/jinja2_1635780242639/work
+
 keras==2.6.0
 Keras-Preprocessing==1.1.2
-kiwisolver @ file:///C:/ci/kiwisolver_1612282446297/work
+kiwisolver
 Markdown==3.3.6
-MarkupSafe @ file:///C:/ci/markupsafe_1621528313524/work
-matplotlib @ file:///C:/ci/matplotlib-suite_1613408055530/work
+MarkupSafe
+matplotlib
 mkl-fft==1.3.0
 mkl-random==1.1.1
 mkl-service==2.3.0
 networkx==1.8.1
-numpy @ file:///C:/ci/numpy_and_numpy_base_1603480701039/work
+numpy
 numpy-quaternion==2021.11.4.15.26.3
 oauthlib==3.1.1
 olefile==0.46
 opencv-python==4.5.4.58
 opt-einsum==3.3.0
-Pillow @ file:///C:/ci/pillow_1625663293114/work
+Pillow
 protobuf==3.19.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 PyHamcrest==2.0.2
-pyparsing @ file:///tmp/build/80754af9/pyparsing_1635766073266/work
-python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pyparsing
+python-dateutil
 pytz==2021.3
 requests==2.26.0
 requests-oauthlib==1.3.0
@@ -66,11 +65,10 @@ tensorboard-plugin-wit==1.8.0
 tensorflow-estimator==2.6.0
 tensorflow-gpu==1.8.0
 termcolor==1.1.0
-tornado @ file:///C:/ci/tornado_1606942379977/work
+
 Twisted==20.3.0
 typing-extensions==3.7.4.3
 urllib3==1.26.7
-Werkzeug @ file:///tmp/build/80754af9/werkzeug_1635505089296/work
 wincertstore==0.2
 wrapt==1.12.1
 zipp==3.6.0
