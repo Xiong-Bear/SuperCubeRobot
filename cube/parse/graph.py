@@ -25,18 +25,19 @@ def judgeColor(hsv):
         return 'Y'
     elif h>=0 and h<=180 and s>=0 and s<=105 and v>=155 and v<=255:
         return 'W'
-    elif h>=156 and h<=180 and s>=43 and s<=255 and v>=46 and v<=255:
+    elif h>=140 and h<=180 and s>=43 and s<=255 and v>=46 and v<=255:
         return 'R'
-    elif h>=0 and h<=10 and s>=43 and s<=255 and v>=46 and v<=255:
-        return 'R'
+    # elif h>=0 and h<=10 and s>=43 and s<=255 and v>=46 and v<=255:
+    #     return 'R'
     elif h>=45 and h<=86 and s>=43 and s<=255 and v>=46 and v<=255:
         return 'G'
     #elif h>=170 and h<=180 and s>=43 and s<=255 and v>=46 and v<=255:
         #return 'O'
-    elif h>=11 and h<=25 and s>=43 and s<=255 and v>=46 and v<=255:
+    elif h>=0 and h<=20 and s>=43 and s<=255 and v>=46 and v<=255:
         return 'O'
     elif h>=100 and h<=124 and s>=43 and s<=255 and v>=46 and v<=255:
         return 'B'
+
 
 def findMost(y,x,hsv):
     tempData={'B':0,'G':0,'W':0,'Y':0,'O':0,'R':0}

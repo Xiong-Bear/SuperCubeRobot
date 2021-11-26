@@ -103,62 +103,75 @@
 </head>
 
 <body topmargin="50px">
-
-<table align="center" border="1">
+<div class="container">
+    <center>
+  <h1>SuperCubeRobot: Upload and Robot Solve</h1>
+  <h2>course design of Advance Software Engineering</h2>
+        </center>
+</div>
+<table style="margin-top: 20px" align="center" border="1">
     <tr>
         <td>
-            <p>A:绿色块中心向前,白色中心块向上</p>
+            <center><p>A:绿色块中心向前,白色中心块向上</p>
             <video id="v1"  style="width: 640px;height: 480px; display: none;" hidden></video>
             <canvas id="c1" width="640" height="480"></canvas>
             <br/>
             <button id="take1">拍摄</button>
-            <button id="up1">识别</button>
+            <button id="up1">识别</button></center>
         </td>
         <td>
-            <p>B:红色块中心向前,白色中心块向上</p>
+            <center><p>B:红色块中心向前,白色中心块向上</p>
             <video id="v2" style="width: 250px;height: 250px;" hidden></video>
             <canvas id="c2" width="250" height="250"></canvas>
             <br/>
             <button id="take2">拍摄</button>
-            <button id="up2">识别</button>
+            <button id="up2">识别</button></center>
         </td>
+
+    </tr>
+    <tr>
         <td>
-            <p>C:橙色块中心向前,白色中心块向上</p>
+            <center><p>C:橙色块中心向前,白色中心块向上</p>
             <video id="v3" style="width: 250px;height: 250px;" hidden></video>
             <canvas id="c3" width="250" height="250"></canvas>
             <br/>
             <button id="take3">拍摄</button>
-            <button id="up3">识别</button>
+            <button id="up3">识别</button></center>
         </td>
-    </tr>
-    <tr>
         <td>
-            <p>D:蓝色块中心向前,黄色中心块向上</p>
+            <center><p>D:蓝色块中心向前,黄色中心块向上</p>
             <video id="v4" style="width: 250px;height: 250px;" hidden></video>
             <canvas id="c4" width="250" height="250"></canvas>
             <br/>
             <button id="take4">拍摄</button>
-              <button id="up4">识别</button>
+              <button id="up4">识别</button></center>
         </td>
-        <td>
-            <p>E:黄色块中心向前,绿色中心块向上</p>
+    </tr>
+        <tr>
+            <td>
+            <center><p>E:黄色块中心向前,绿色中心块向上</p>
             <video id="v5" style="width: 250px;height: 250px;" hidden></video>
             <canvas id="c5" width="250" height="250"></canvas>
             <br/>
             <button id="take5">拍摄</button>
-              <button id="up5">识别</button>
+              <button id="up5">识别</button></center>
         </td>
         <td>
-            <p>F:白色块中心向前,蓝色中心块向上</p>
+            <center><p>F:白色块中心向前,蓝色中心块向上</p>
             <video id="v6" style="width: 250px;height: 250px;" hidden></video>
             <canvas id="c6" width="250" height="250"></canvas>
             <br/>
             <button id="take6">拍摄</button>
-            <button id="up6">识别</button>
+            <button id="up6">识别</button></center>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <center><button id="robot_solve" type="button">Robot_Solve!</button></center>
         </td>
     </tr>
 </table>
-
+<h4 style="text-align: center" id="robot_solve_steps"></h4>
 <div id="show"></div>
 {#    <img style="width: 250px;height: 250px;  ;" src="http://placehold.it/640&text=Your%20image%20here%20..." id="photo" alt="photo">#}
 <script>
@@ -224,7 +237,7 @@
                 let ctx = c1.getContext('2d');
                   canvasInterval1 = window.setInterval(() => {
                     drawImage(v,ctx);
-                    draw();
+                    draw(c1, ctx);
                   }, 1000 / fps);
             }
             else if (videoPlaying) {
@@ -873,25 +886,22 @@
 
 </script>
 
-<link rel="stylesheet"  href="../../cube/static/css/main.css">
-<div id="button_container" class="container">
-{#			<button disabled id="scramble" type="button">Scramble</button>#}
-{#			<button disabled id="solve" type="button">Solve!</button>#}
-            <button  id="robot_solve" type="button">Robot_Solve!</button>
-		</div>
-
 <script>
     document.getElementById('robot_solve').addEventListener('click', function () {
         state = {'O': color3, 'B': color4, 'R': color2, 'Y': color5, 'W': color6, 'G': color1};
         console.log(state);
+        let robot = document.getElementById('robot_solve_steps');
         if (confirm('请确认魔方识别状态，是否提交') == true) {
+            robot.innerText = 'Solving...';
             $.ajax({
                 url: '../upload/robot_solve/',
                 data: {"colors": JSON.stringify(state)},
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {
-                    alert(response);
+                    alert('魔方状态还原求解成功！');
+
+                    robot.innerText = 'Solution:' + response['robot_solve_text'];
                     {#solveStartState = JSON.parse(JSON.stringify(state));#}
                     {#solveMoves = response["moves"];#}
                     {#solveMoves_rev = response["moves_rev"];#}
@@ -915,6 +925,24 @@
         }
     });
 </script>
+<link rel="stylesheet"  href="../../cube/static/css/main.css">
+<div id="button_container" class="container">
+{#            <button  id="robot_solve" type="button">Robot_Solve!</button>#}
+		</div>
+<div class="well well-lg">
+	<center>
+	<a href="https://github.com/Xiong-Bear/SuperCubeRobot" target="_blank">Code</a><br>
+	<span style='color:black'>course design of Advance Software Engineering</span><br>
+	<span class="paper-authors">Xiong Yihao, Xin Yuanlin, Liu Yatao</span><br>
+	<span class="paper-journal"><i>Center for Space Utilization</i>, Chinese Academy of Sciences</span>,
+	<span class="paper-year">2021</span>
+	<br>
+	<br>
+	</center>
+</div>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="../../cube/static/js/main.js"></script>
 </body>
 
 </html>
