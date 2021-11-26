@@ -234,6 +234,36 @@ function solveCube() {
 	});
 }
 
+function robot_solveCube() {
+	disableInput();
+	clearSoln();
+	document.getElementById("solution_text").innerHTML = "SOLVING...";
+	console.log(state);
+	$.ajax({
+		url: '../advance/robot_solve/',
+		data: {"state": JSON.stringify(state)},
+		type: 'POST',
+		dataType: 'json',
+		success: function(response) {
+			solveStartState = JSON.parse(JSON.stringify(state));
+			solveMoves = response["moves"];
+			solveMoves_rev = response["moves_rev"];
+			solution_text = response["solve_text"];
+			solution_text.push("SOLVED!");
+			setSolnText(true);
+			// disableInput();
+			moves = JSON.parse(JSON.stringify(solveMoves));
+
+			setTimeout(function(){nextState(500)}, 500);
+		},
+		error: function(error) {
+				console.log(error);
+				document.getElementById("solution_text").innerHTML = "...";
+				// setTimeout(function(){solveCube()}, 500);
+		},
+	});
+}
+
 $( document ).ready($(function() {
 
 	disableInput();

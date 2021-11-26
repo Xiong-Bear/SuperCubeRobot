@@ -85,7 +85,7 @@ def solveAll(n, f):
         f.get('R')[0] = t.get(n.get('R')[0])
         f.get('W')[8] = t.get(n.get('W')[8])
         t = solve3(n.get('G')[6], n.get('O')[8], n.get('Y')[0])
-        if not t:
+        if t == False:
             print('输入有误')
             return False
         f.get('G')[6] = t.get(n.get('G')[6])
@@ -251,7 +251,7 @@ def post(state):
 
 
 def parse(result):
-    originData = {'W': ['#' for i in range(9)], 'Y': ['#' for i in range(9)], 'B': ['#' for i in range(9)],
+    originData = {'W': ['#' for i in range(9)], 'Y': ['#' for i in range(9)], 'B': ['#' for i in range(9)], \
                   'G': ['#' for i in range(9)], 'O': ['#' for i in range(9)], 'R': ['#' for i in range(9)]}
     if result == 'q':
         print('用户退出，程序结束')
@@ -269,6 +269,7 @@ def parse(result):
             #     finalData+=i+' '
             # finalData=finalData.strip()
             # print(finalData)
-            return post(r)
+            # return post(r)
+            return r
         else:
             raise UserWarning("Solve failes!")

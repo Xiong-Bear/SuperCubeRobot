@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<video id="video" height="1000" width="1000" ></video>
+<canvas id="canvas" width="1000" height="1000"></canvas>
+<script>
+    var canvas = document.getElementById('canvas');
+    var video = document.getElementById('video');
+    var context = canvas.getContext("2d");
+
+    $( document ).ready($(function() {
+    draw();
+    video.play();
+	console.log( "ready!" );
+}));
+
+    function draw() {
+        context.beginPath();//开始绘制线条，若不使用beginPath，则不能绘制多条线条
+        context.lineWidth = 1;//设置线条宽度
+        context.strokeStyle = "blue";//设置线条颜色
+        context.moveTo(100, 100);
+        let x,y;
+        x = y = 100;
+        for(let i=0; i < 3; i++){
+            for (let j=0; j<3;j++){
+                context.strokeRect(x, y, 50, 50);
+                x += 50;
+            }
+            x -= 150;
+            y += 50;
+        }
+        context.closePath();//结束绘制线条，不是必须的
+}
+
+
+video.addEventListener('play', function () {
+    var $this = this; //cache
+    (function loop() {
+        if (!$this.paused && !$this.ended) {
+            ctx.drawImage($this, 0, 0);
+            setTimeout(loop, 1000 / 30); // drawing at 30fps
+        }
+    })();
+}, 0);
+</script>
+</body>
+</html>

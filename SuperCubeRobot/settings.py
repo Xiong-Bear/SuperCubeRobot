@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = '/images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'cube/images/')
 
 # APPEND_SLASH = False
 # Quick-start development settings - unsuitable for production
@@ -119,9 +119,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # path = os.path.join(BASE_DIR, 'templates/cube/')
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'cube/static/')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'cube/static/'),
+# ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

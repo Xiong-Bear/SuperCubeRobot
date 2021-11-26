@@ -19,19 +19,22 @@ import socket
 import gc
 from cube.code.ml_utils import nnet_utils
 from cube.code.ml_utils import search_utils
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
 # --------solve
 def getResults(state):
-
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--methods', type=str, default="nnet", help="Which methods to use. Comma separated list")
 
     parser.add_argument('--combine_outputs', action='store_true')
 
-    parser.add_argument('--model_loc', type=str, default="cube/code/savedModels/cube3/exported_model", help="Location of model")
+    # parser.add_argument('--model_loc', type=str, default="cube/code/savedModels/cube3/exported_model", help="Location of model")
+    parser.add_argument('--model_loc', type=str,
+                        default="E:/pycharm/SuperCubeRobot/cube/code/savedModels/cube3/exported_model",
+                        help="Location of model")
     parser.add_argument('--model_name', type=str, default="saved_model.pb", help="Which model to load")
 
     parser.add_argument('--nnet_parallel', type=int, default=1, help="How many to look at, at one time for nnet")
@@ -58,11 +61,11 @@ def getResults(state):
 
     # convert
     FEToState = [6, 3, 0, 7, 4, 1, 8, 5, 2, 15, 12, \
-                       9, 16, 13, 10, 17, 14, 11, 24, 21, 18, \
-                       25, 22, 19, 26, 23, 20, 33, 30, 27, 34, \
-                       31, 28, 35, 32, 29, 38, 41, 44, 37, 40, \
-                       43, 36, 39, 42, 51, 48, 45, 52, 49, 46, \
-                       53, 50, 47]
+                 9, 16, 13, 10, 17, 14, 11, 24, 21, 18, \
+                 25, 22, 19, 26, 23, 20, 33, 30, 27, 34, \
+                 31, 28, 35, 32, 29, 38, 41, 44, 37, 40, \
+                 43, 36, 39, 42, 51, 48, 45, 52, 49, 46, \
+                 53, 50, 47]
     converted_state = []
     for i in range(len(FEToState)):
         converted_state.append(state[FEToState[i]])
@@ -87,7 +90,8 @@ def getResults(state):
             dataQueues.append(Queue(1))
             resQueues.append(Queue(1))
 
-            dataListenerProc = Process(target=dataListener, args=(dataQueues[num], resQueues[num], args, useGPU, Environment,gpuNums[num],))
+            dataListenerProc = Process(target=dataListener,
+                                       args=(dataQueues[num], resQueues[num], args, useGPU, Environment, gpuNums[num],))
             dataListenerProc.daemon = True
             dataListenerProc.start()
 
@@ -154,8 +158,6 @@ def getResults(state):
     return results
 
 
-
-
 def runMethods(idx_state, methods, Environment, heuristicFn_nnet, args, data):
     idx, state = idx_state
     stateStr = " ".join([str(x) for x in state])
@@ -211,6 +213,7 @@ def dataListener(dataQueue, resQueue, args, useGPU, Environment, gpuNum=None):
         nnetResult = nnet(data)
         resQueue.put(nnetResult)
 
+
 if __name__ == "__main__":
     # ---------processing state
     # data = ImmutableMultiDict([('state',
@@ -220,7 +223,6 @@ if __name__ == "__main__":
     #        20, 32, 51]')])
     data = ImmutableMultiDict([('state',
                                 '51, 32, 26, 30, 4, 3, 2, 19, 36, 9, 39, 29, 28, 13, 14, 38, 5, 45, 27, 16, 44, 21, 22, 46, 8, 52, 42, 15, 50, 47, 23, 31, 34, 6, 48, 11, 35, 41, 24, 10, 40, 37, 17, 7, 0, 20, 43, 33, 25, 49, 1, 18, 12, 53')])
-
 
     data = data.to_dict()
     arr = []

@@ -4,8 +4,102 @@
 <head>
     <meta charset="UTF-8">
     <title>SuperCubeRobot</title>
-    <link rel="shortcut icon" href="../../static/images/favicon.ico">
+    <link rel="shortcut icon" href="../../cube/static/images/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        let fps = 60;
+        let canvasInterval1 = null;
+        let canvasInterval2 = null;
+        let canvasInterval3 = null;
+        let canvasInterval4 = null;
+        let canvasInterval5 = null;
+        let canvasInterval6 = null;
+        let color1 = ['x','x','x','x','x','x'];
+        let color2 = ['x','x','x','x','x','x'];
+        let color3 = ['x','x','x','x','x','x'];
+        let color4 = ['x','x','x','x','x','x'];
+        let color5 = ['x','x','x','x','x','x'];
+        let color6 = ['x','x','x','x','x','x'];
+        let state = {'O': color3, 'B': color4, 'R': color2, 'Y': color5, 'W': color6, 'G': color1};
+        let data1 = null;
+        let data2 = null;
+        let data3 = null;
+        let data4 = null;
+        let data5 = null;
+        let data6 = null;
+        const width = 640;
+        const height = 480;
+    $( document ).ready($(function() {
+    draw();
+}));
+
+    function draw(canvas, context) {
+        {#var canvas = document.getElementById('c1');#}
+        {#var context = canvas.getContext("2d");//得到绘图的上下文环境#}
+        context.beginPath();//开始绘制线条，若不使用beginPath，则不能绘制多条线条
+        context.lineWidth = 1;//设置线条宽度
+        context.strokeStyle = "black";//设置线条颜色
+        context.moveTo(180, 100);
+        let x,y;
+        x = 180;
+        y = 100;
+        for(let i=0; i < 3; i++){
+            for (let j=0; j<3;j++){
+                context.strokeRect(x, y, 70, 70);
+                x += 70;
+            }
+            x -= 210;
+            y += 70;
+        }
+        context.closePath();//结束绘制线条，不是必须的
+}
+
+    function drawImage(video, ctx) {
+         ctx.drawImage(video, 0, 0, width, height);
+    }
+
+    function drawCube(canvas, color_data) {
+        console.log(color_data);
+        context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        let color = ['x','x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+
+        for(let i=0; i<9; i++){
+            let t = color_data[i];
+            if(t == 'W')
+                color[i] = 'white';
+            if(t == 'O')
+                color[i] = 'orange';
+            if(t == 'B')
+                color[i] = 'blue';
+            if(t == 'G')
+                color[i] = 'green';
+            if(t == 'Y')
+                color[i] = 'yellow';
+            if(t == 'R')
+                color[i] = 'red';
+        }
+        context.beginPath();//开始绘制线条，若不使用beginPath，则不能绘制多条线条
+        context.moveTo(180, 100);
+        let x,y,n;
+        x = 180;
+        y = 100;
+        n = 0;
+        for(let i=0; i < 3; i++){
+            for (let j=0; j<3;j++){
+                context.fillStyle = color[n];
+                context.fillRect(x, y, 70, 70);
+                x += 70;
+                n ++;
+            }
+            x -= 210;
+            y += 70;
+        }
+        context.closePath();//结束绘制线条，不是必须的
+        draw(canvas, canvas.getContext('2d'));
+    }
+
+</script>
 </head>
 
 <body topmargin="50px">
@@ -14,60 +108,57 @@
     <tr>
         <td>
             <p>A:绿色块中心向前,白色中心块向上</p>
-            <video id="v1" style="width: 250px;height: 250px;"></video>
-            <img id="p1" style="width: 250px;height: 250px; display: none;" src="" />
+            <video id="v1"  style="width: 640px;height: 480px; display: none;" hidden></video>
+            <canvas id="c1" width="640" height="480"></canvas>
             <br/>
             <button id="take1">拍摄</button>
-            <button onclick="uploadImage()" id="up1">识别</button>
+            <button id="up1">识别</button>
         </td>
         <td>
             <p>B:红色块中心向前,白色中心块向上</p>
-            <video id="v2" style="width: 250px;height: 250px;"></video>
-            <img id="p2" style="width: 250px;height: 250px; display: none;" src=""/>
+            <video id="v2" style="width: 250px;height: 250px;" hidden></video>
+            <canvas id="c2" width="250" height="250"></canvas>
             <br/>
             <button id="take2">拍摄</button>
-            <button onclick="uploadImage()" id="up2">识别</button>
+            <button id="up2">识别</button>
         </td>
         <td>
             <p>C:橙色块中心向前,白色中心块向上</p>
-            <video id="v3" style="width: 250px;height: 250px;"></video>
-            <img id="p3" style="width: 250px;height: 250px; display: none;" src=""/>
+            <video id="v3" style="width: 250px;height: 250px;" hidden></video>
+            <canvas id="c3" width="250" height="250"></canvas>
             <br/>
             <button id="take3">拍摄</button>
-            <button onclick="uploadImage()" id="up3">识别</button>
+            <button id="up3">识别</button>
         </td>
     </tr>
     <tr>
         <td>
             <p>D:蓝色块中心向前,黄色中心块向上</p>
-            <video id="v4" style="width: 250px;height: 250px;"></video>
-            <img id="p4" style="width: 250px;height: 250px; display: none;" src=""/>
+            <video id="v4" style="width: 250px;height: 250px;" hidden></video>
+            <canvas id="c4" width="250" height="250"></canvas>
             <br/>
             <button id="take4">拍摄</button>
-              <button onclick="uploadImage()" id="up4">识别</button>
+              <button id="up4">识别</button>
         </td>
         <td>
             <p>E:黄色块中心向前,绿色中心块向上</p>
-            <video id="v5" style="width: 250px;height: 250px;"></video>
-            <img id="p5" style="width: 250px;height: 250px; display: none;" src=""/>
+            <video id="v5" style="width: 250px;height: 250px;" hidden></video>
+            <canvas id="c5" width="250" height="250"></canvas>
             <br/>
             <button id="take5">拍摄</button>
-              <button onclick="uploadImage()" id="up5">识别</button>
+              <button id="up5">识别</button>
         </td>
         <td>
             <p>F:白色块中心向前,蓝色中心块向上</p>
-            <video id="v6" style="width: 250px;height: 250px;"></video>
-            <img id="p6" style="width: 250px;height: 250px; display: none;" src=""/>
+            <video id="v6" style="width: 250px;height: 250px;" hidden></video>
+            <canvas id="c6" width="250" height="250"></canvas>
             <br/>
             <button id="take6">拍摄</button>
-            <button onclick="uploadImage()" id="up6">识别</button>
+            <button id="up6">识别</button>
         </td>
     </tr>
 </table>
 
-    <canvas id="canvas" style="display:none;"></canvas>
-{#	<button onClick="saveFile(filename);" type="button">下载图片</button>#}
-{#    <br />#}
 <div id="show"></div>
 {#    <img style="width: 250px;height: 250px;  ;" src="http://placehold.it/640&text=Your%20image%20here%20..." id="photo" alt="photo">#}
 <script>
@@ -111,6 +202,14 @@
             v.onloadedmetadata = function (e) {
                 v.play();
                 videoPlaying = true;
+                let c1 = document.getElementById('c1');
+                c1.width = width;
+                c1.height = height;
+                let ctx = c1.getContext('2d');
+                  canvasInterval1 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c1, ctx);
+                  }, 1000 / fps);
             };
         }).catch(err => {
             console.error(err.name + ": " + err.message);
@@ -119,34 +218,35 @@
         document.getElementById('take1').addEventListener('click', function () {
             if(document.getElementById('take1').innerText === '重拍'){
                 document.getElementById('take1').innerText = '拍摄';
-                 document.getElementById('v1').style.display = 'block';
-                 document.getElementById('p1').style.display = 'none';
+                let c1 = document.getElementById('c1');
+                c1.width = width;
+                c1.height = height;
+                let ctx = c1.getContext('2d');
+                  canvasInterval1 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw();
+                  }, 1000 / fps);
             }
             else if (videoPlaying) {
                 document.getElementById('take1').innerText = '重拍';
-                let canvas = document.getElementById('canvas');
-                canvas.width = v.videoWidth;
-                canvas.height = v.videoHeight;
-                canvas.getContext('2d').drawImage(v, 0, 0);
-                let data = canvas.toDataURL('image/jpg');
-                document.getElementById('v1').style.display = 'none';
-                document.getElementById('p1').setAttribute('src', data);
-                document.getElementById('p1').style.display = 'block';
-                {#document.getElementById('m1').value = data;#}
-                {#alert(document.getElementById('m1').getAttribute('value'))#}
+                clearInterval(canvasInterval1);
+                let c1 = document.getElementById('c1');
+                c1.width = width;
+                c1.height = height;
+                drawImage(v, c1.getContext('2d'));
+                data1 = c1.toDataURL('image/jpg');
             }
         }, false);
     })();
 
 
-    var canvas = document.getElementById('canvas');
-    function uploadImage() {
-        let v = document.getElementById('v1');
-        let canvas = document.getElementById('canvas');
-        {#canvas.width = v.videoWidth;#}
-        {#canvas.height = v.videoHeight;#}
-        {#canvas.getContext('2d').drawImage(v, 0, 0);#}
-        var imgData = canvas.toDataURL("image/jpg");
+    {#var canvas = document.getElementById('canvas');#}
+
+
+    document.getElementById('up1').addEventListener('click', function () {
+        let v1 = document.getElementById('v1');
+        let c1 = document.getElementById('c1');
+        var imgData = data1;
         imgData = imgData.replace(/^data:image\/(png|jpg);base64,/, "");
         //上传到后台
         var uploadAjax = $.ajax({
@@ -154,14 +254,17 @@
             type: "POST",
             //后端需要调用的地址
             url: "../upload/",
-            data: JSON.stringify({"imgData": imgData}),
+            data: JSON.stringify({"imgData": imgData, 'id':0}),
             contentType: "json/application",
             //设置超时
             timeout: 10000,
             async: true,
             success: function (data) {
-                //成功后回调
-                alert('上传成功！')
+                clearInterval(canvasInterval1);
+                data = JSON.parse(data);
+                color1 = data.color;
+                drawCube(c1, data.color);
+                alert('识别成功，请检查识别结果！')
             },
             error: function (data) {
             },
@@ -176,10 +279,11 @@
                 }
             }
         });
-    }
+    });
 
 </script>
 <script>
+    {#document.getElementById('canvas').hidden;#}
     !(function () {
         // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
         if (navigator.mediaDevices === undefined) {
@@ -219,39 +323,48 @@
             v.onloadedmetadata = function (e) {
                 v.play();
                 videoPlaying = true;
+                let c2 = document.getElementById('c2');
+                c2.width = width;
+                c2.height = height;
+                let ctx = c2.getContext('2d');
+                  canvasInterval2 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c2, ctx);
+                  }, 1000 / fps);
             };
         }).catch(err => {
             console.error(err.name + ": " + err.message);
-        })
+        });
 
         document.getElementById('take2').addEventListener('click', function () {
             if(document.getElementById('take2').innerText === '重拍'){
                 document.getElementById('take2').innerText = '拍摄';
-                 document.getElementById('v2').style.display = 'block';
-                 document.getElementById('p2').style.display = 'none';
+                let c2 = document.getElementById('c2');
+                c2.width = width;
+                c2.height = height;
+                let ctx = c2.getContext('2d');
+                  canvasInterval2 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c2, ctx);
+                  }, 1000 / fps);
             }
             else if (videoPlaying) {
                 document.getElementById('take2').innerText = '重拍';
-                let canvas = document.getElementById('canvas');
-                canvas.width = v.videoWidth;
-                canvas.height = v.videoHeight;
-                canvas.getContext('2d').drawImage(v2, 0, 0);
-                let data = canvas.toDataURL('images/webp');
-                document.getElementById('v2').style.display = 'none';
-                document.getElementById('p2').setAttribute('src', data);
-                document.getElementById('p2').style.display = 'block'
+                clearInterval(canvasInterval2);
+                let c2 = document.getElementById('c2');
+                c2.width = width;
+                c2.height = height;
+                drawImage(v, c2.getContext('2d'));
+                data2 = c2.toDataURL('image/jpg');
             }
         }, false);
     })();
 
-    var canvas = document.getElementById('canvas');
-    function uploadImage() {
-        let v = document.getElementById('v2');
-        let canvas = document.getElementById('canvas');
-        {#canvas.width = v.videoWidth;#}
-        {#canvas.height = v.videoHeight;#}
-        {#canvas.getContext('2d').drawImage(v, 0, 0);#}
-        var imgData = canvas.toDataURL("image/jpg");
+
+    {#var canvas = document.getElementById('canvas');#}
+    document.getElementById('up2').addEventListener('click', function () {
+        var c2 = document.getElementById('c2');
+        var imgData = data2;
         imgData = imgData.replace(/^data:image\/(png|jpg);base64,/, "");
         //上传到后台
         var uploadAjax = $.ajax({
@@ -259,14 +372,17 @@
             type: "POST",
             //后端需要调用的地址
             url: "../upload/",
-            data: JSON.stringify({"imgData": imgData}),
+            data: JSON.stringify({"imgData": imgData, 'id':1}),
             contentType: "json/application",
             //设置超时
             timeout: 10000,
             async: true,
             success: function (data) {
-                //成功后回调
-                alert('上传成功！')
+                 clearInterval(canvasInterval2);
+                data = JSON.parse(data);
+                color2 = data.color;
+                drawCube(c2, data.color);
+                alert('识别成功，请检查识别结果！')
             },
             error: function (data) {
             },
@@ -281,96 +397,109 @@
                 }
             }
         });
-    }
-    </script>
+    });
+
+</script>
 <script>
-        !(function () {
-            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
-            if (navigator.mediaDevices === undefined) {
-                navigator.mediaDevices = {};
-            }
-            if (navigator.mediaDevices.getUserMedia === undefined) {
-                navigator.mediaDevices.getUserMedia = function (constraints) {
-                    // 首先，如果有getUserMedia的话，就获得它
-                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    {#document.getElementById('canvas').hidden;#}
+    !(function () {
+        // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+        }
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+            navigator.mediaDevices.getUserMedia = function (constraints) {
+                // 首先，如果有getUserMedia的话，就获得它
+                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
-                    if (!getUserMedia) {
-                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-                    }
-
-                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise
-                    return new Promise(function (resolve, reject) {
-                        getUserMedia.call(navigator, constraints, resolve, reject);
-                    });
+                // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
                 }
+
+                // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                return new Promise(function (resolve, reject) {
+                    getUserMedia.call(navigator, constraints, resolve, reject);
+                });
             }
-            const constraints = {
-                video: true,
-                audio: false
+        }
+        const constraints = {
+            video: true,
+            audio: false
+        };
+        let videoPlaying = false;
+        let v = document.getElementById('v3');
+        let promise = navigator.mediaDevices.getUserMedia(constraints);
+        promise.then(stream => {
+            // 旧的浏览器可能没有srcObject
+            if ("srcObject" in v) {
+                v.srcObject = stream;
+            } else {
+                // 防止再新的浏览器里使用它，应为它已经不再支持了
+                v.src = window.URL.createObjectURL(stream);
+            }
+            v.onloadedmetadata = function (e) {
+                v.play();
+                videoPlaying = true;
+                let c3 = document.getElementById('c3');
+                c3.width = width;
+                c3.height = height;
+                let ctx = c3.getContext('2d');
+                  canvasInterval3 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c3, ctx);
+                  }, 1000 / fps);
             };
-            let videoPlaying = false;
-            let v = document.getElementById('v3');
-            let promise = navigator.mediaDevices.getUserMedia(constraints);
-            promise.then(stream => {
-                // 旧的浏览器可能没有srcObject
-                if ("srcObject" in v) {
-                    v.srcObject = stream;
-                } else {
-                    // 防止再新的浏览器里使用它，应为它已经不再支持了
-                    v.src = window.URL.createObjectURL(stream);
-                }
-                v.onloadedmetadata = function (e) {
-                    v.play();
-                    videoPlaying = true;
-                };
-            }).catch(err => {
-                console.error(err.name + ": " + err.message);
-            })
+        }).catch(err => {
+            console.error(err.name + ": " + err.message);
+        });
 
-            document.getElementById('take3').addEventListener('click', function () {
-                if(document.getElementById('take3').innerText === '重拍'){
+        document.getElementById('take3').addEventListener('click', function () {
+            if(document.getElementById('take3').innerText === '重拍'){
                 document.getElementById('take3').innerText = '拍摄';
-                 document.getElementById('v3').style.display = 'block';
-                 document.getElementById('p3').style.display = 'none';
+                let c3 = document.getElementById('c3');
+                c3.width = width;
+                c3.height = height;
+                let ctx = c3.getContext('2d');
+                  canvasInterval3 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c3, ctx);
+                  }, 1000 / fps);
             }
             else if (videoPlaying) {
                 document.getElementById('take3').innerText = '重拍';
-                    let canvas = document.getElementById('canvas');
-                    canvas.width = v.videoWidth;
-                    canvas.height = v.videoHeight;
-                    canvas.getContext('2d').drawImage(v3, 0, 0);
-                    let data = canvas.toDataURL('images/webp');
-                    document.getElementById('v3').style.display = 'none';
-                document.getElementById('p3').setAttribute('src', data);
-                document.getElementById('p3').style.display = 'block'
-                }
-            }, false);
-        })();
+                clearInterval(canvasInterval3);
+                let c3 = document.getElementById('c3');
+                c3.width = width;
+                c3.height = height;
+                drawImage(v, c3.getContext('2d'));
+                data3 = c3.toDataURL('image/jpg');
+            }
+        }, false);
+    })();
 
-            var canvas = document.getElementById('canvas');
-    function uploadImage() {
-        let v = document.getElementById('v3');
-        let canvas = document.getElementById('canvas');
-        {#canvas.width = v.videoWidth;#}
-        {#canvas.height = v.videoHeight;#}
-        {#canvas.getContext('2d').drawImage(v, 0, 0);#}
-        var imgData = canvas.toDataURL("image/jpg");
+
+    {#var canvas = document.getElementById('canvas');#}
+    document.getElementById('up3').addEventListener('click', function () {
+        var c3 = document.getElementById('c3');
+        var imgData = data3;
         imgData = imgData.replace(/^data:image\/(png|jpg);base64,/, "");
         //上传到后台
         var uploadAjax = $.ajax({
-
             type: "POST",
             //后端需要调用的地址
             url: "../upload/",
-            data: JSON.stringify({"imgData": imgData}),
+            data: JSON.stringify({"imgData": imgData, 'id':2}),
             contentType: "json/application",
             //设置超时
             timeout: 10000,
             async: true,
             success: function (data) {
-                //成功后回调
-                alert('上传成功！')
+                clearInterval(canvasInterval3);
+                data = JSON.parse(data);
+                color3 = data.color;
+                drawCube(c3, data.color);
+                alert('识别成功，请检查识别结果！')
             },
             error: function (data) {
             },
@@ -385,81 +514,92 @@
                 }
             }
         });
-    }
-        </script>
+    });
+
+</script>
 <script>
-        !(function () {
-            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
-            if (navigator.mediaDevices === undefined) {
-                navigator.mediaDevices = {};
-            }
-            if (navigator.mediaDevices.getUserMedia === undefined) {
-                navigator.mediaDevices.getUserMedia = function (constraints) {
-                    // 首先，如果有getUserMedia的话，就获得它
-                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    {#document.getElementById('canvas').hidden;#}
+    !(function () {
+        // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+        }
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+            navigator.mediaDevices.getUserMedia = function (constraints) {
+                // 首先，如果有getUserMedia的话，就获得它
+                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
-                    if (!getUserMedia) {
-                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-                    }
-
-                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise
-                    return new Promise(function (resolve, reject) {
-                        getUserMedia.call(navigator, constraints, resolve, reject);
-                    });
+                // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
                 }
+
+                // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                return new Promise(function (resolve, reject) {
+                    getUserMedia.call(navigator, constraints, resolve, reject);
+                });
             }
-            const constraints = {
-                video: true,
-                audio: false
+        }
+        const constraints = {
+            video: true,
+            audio: false
+        };
+        let videoPlaying = false;
+        let v = document.getElementById('v4');
+        let promise = navigator.mediaDevices.getUserMedia(constraints);
+        promise.then(stream => {
+            // 旧的浏览器可能没有srcObject
+            if ("srcObject" in v) {
+                v.srcObject = stream;
+            } else {
+                // 防止再新的浏览器里使用它，应为它已经不再支持了
+                v.src = window.URL.createObjectURL(stream);
+            }
+            v.onloadedmetadata = function (e) {
+                v.play();
+                videoPlaying = true;
+                let c4 = document.getElementById('c4');
+                c4.width = width;
+                c4.height = height;
+                let ctx = c4.getContext('2d');
+                  canvasInterval4 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c4, ctx);
+                  }, 1000 / fps);
             };
-            let videoPlaying = false;
-            let v = document.getElementById('v4');
-            let promise = navigator.mediaDevices.getUserMedia(constraints);
-            promise.then(stream => {
-                // 旧的浏览器可能没有srcObject
-                if ("srcObject" in v) {
-                    v.srcObject = stream;
-                } else {
-                    // 防止再新的浏览器里使用它，应为它已经不再支持了
-                    v.src = window.URL.createObjectURL(stream);
-                }
-                v.onloadedmetadata = function (e) {
-                    v.play();
-                    videoPlaying = true;
-                };
-            }).catch(err => {
-                console.error(err.name + ": " + err.message);
-            })
+        }).catch(err => {
+            console.error(err.name + ": " + err.message);
+        });
 
-            document.getElementById('take4').addEventListener('click', function () {
-                if(document.getElementById('take4').innerText === '重拍'){
+        document.getElementById('take4').addEventListener('click', function () {
+            if(document.getElementById('take4').innerText === '重拍'){
                 document.getElementById('take4').innerText = '拍摄';
-                 document.getElementById('v4').style.display = 'block';
-                 document.getElementById('p4').style.display = 'none';
+                let c4 = document.getElementById('c4');
+                c4.width = width;
+                c4.height = height;
+                let ctx = c4.getContext('2d');
+                  canvasInterval4 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c4, ctx);
+                  }, 1000 / fps);
             }
             else if (videoPlaying) {
                 document.getElementById('take4').innerText = '重拍';
-                    let canvas = document.getElementById('canvas');
-                    canvas.width = v.videoWidth;
-                    canvas.height = v.videoHeight;
-                    canvas.getContext('2d').drawImage(v4, 0, 0);
-                    let data = canvas.toDataURL('images/webp');
-                    document.getElementById('v4').style.display = 'none';
-                document.getElementById('p4').setAttribute('src', data);
-                document.getElementById('p4').style.display = 'block'
-                }
-            }, false);
-        })();
+                clearInterval(canvasInterval4);
+                let c4 = document.getElementById('c4');
+                c4.width = width;
+                c4.height = height;
+                drawImage(v, c4.getContext('2d'));
+                data4 = c4.toDataURL('image/jpg');
+            }
+        }, false);
+    })();
 
-            var canvas = document.getElementById('canvas');
-    function uploadImage() {
-        let v = document.getElementById('v4');
-        let canvas = document.getElementById('canvas');
-        {#canvas.width = v.videoWidth;#}
-        {#canvas.height = v.videoHeight;#}
-        {#canvas.getContext('2d').drawImage(v, 0, 0);#}
-        var imgData = canvas.toDataURL("image/jpg");
+
+    {#var canvas = document.getElementById('canvas');#}
+    document.getElementById('up4').addEventListener('click', function () {
+        var imgData = data4;
+        var c4 = document.getElementById('c4');
         imgData = imgData.replace(/^data:image\/(png|jpg);base64,/, "");
         //上传到后台
         var uploadAjax = $.ajax({
@@ -467,16 +607,20 @@
             type: "POST",
             //后端需要调用的地址
             url: "../upload/",
-            data: JSON.stringify({"imgData": imgData}),
+            data: JSON.stringify({"imgData": imgData, 'id':3}),
             contentType: "json/application",
             //设置超时
             timeout: 10000,
             async: true,
             success: function (data) {
-                //成功后回调
-                alert('上传成功！')
+                clearInterval(canvasInterval4);
+                data = JSON.parse(data);
+                color4 = data.color;
+                drawCube(c4, data.color);
+                alert('识别成功，请检查识别结果！')
             },
             error: function (data) {
+                alert('识别失败，请重新拍摄！')
             },
             //调用执行后调用的函数
             complete: function (XMLHttpRequest, textStatus) {
@@ -489,81 +633,92 @@
                 }
             }
         });
-    }
-        </script>
+    });
+
+</script>
 <script>
-        !(function () {
-            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
-            if (navigator.mediaDevices === undefined) {
-                navigator.mediaDevices = {};
-            }
-            if (navigator.mediaDevices.getUserMedia === undefined) {
-                navigator.mediaDevices.getUserMedia = function (constraints) {
-                    // 首先，如果有getUserMedia的话，就获得它
-                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    {#document.getElementById('canvas').hidden;#}
+    !(function () {
+        // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+        }
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+            navigator.mediaDevices.getUserMedia = function (constraints) {
+                // 首先，如果有getUserMedia的话，就获得它
+                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
-                    if (!getUserMedia) {
-                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-                    }
-
-                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise
-                    return new Promise(function (resolve, reject) {
-                        getUserMedia.call(navigator, constraints, resolve, reject);
-                    });
+                // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
                 }
+
+                // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                return new Promise(function (resolve, reject) {
+                    getUserMedia.call(navigator, constraints, resolve, reject);
+                });
             }
-            const constraints = {
-                video: true,
-                audio: false
+        }
+        const constraints = {
+            video: true,
+            audio: false
+        };
+        let videoPlaying = false;
+        let v = document.getElementById('v5');
+        let promise = navigator.mediaDevices.getUserMedia(constraints);
+        promise.then(stream => {
+            // 旧的浏览器可能没有srcObject
+            if ("srcObject" in v) {
+                v.srcObject = stream;
+            } else {
+                // 防止再新的浏览器里使用它，应为它已经不再支持了
+                v.src = window.URL.createObjectURL(stream);
+            }
+            v.onloadedmetadata = function (e) {
+                v.play();
+                videoPlaying = true;
+                let c5 = document.getElementById('c5');
+                c5.width = width;
+                c5.height = height;
+                let ctx = c5.getContext('2d');
+                  canvasInterval5 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c5, ctx);
+                  }, 1000 / fps);
             };
-            let videoPlaying = false;
-            let v = document.getElementById('v5');
-            let promise = navigator.mediaDevices.getUserMedia(constraints);
-            promise.then(stream => {
-                // 旧的浏览器可能没有srcObject
-                if ("srcObject" in v) {
-                    v.srcObject = stream;
-                } else {
-                    // 防止再新的浏览器里使用它，应为它已经不再支持了
-                    v.src = window.URL.createObjectURL(stream);
-                }
-                v.onloadedmetadata = function (e) {
-                    v.play();
-                    videoPlaying = true;
-                };
-            }).catch(err => {
-                console.error(err.name + ": " + err.message);
-            })
+        }).catch(err => {
+            console.error(err.name + ": " + err.message);
+        });
 
-            document.getElementById('take5').addEventListener('click', function () {
-               if(document.getElementById('take5').innerText === '重拍'){
+        document.getElementById('take5').addEventListener('click', function () {
+            if(document.getElementById('take5').innerText === '重拍'){
                 document.getElementById('take5').innerText = '拍摄';
-                 document.getElementById('v5').style.display = 'block';
-                 document.getElementById('p5').style.display = 'none';
+                let c5 = document.getElementById('c5');
+                c5.width = width;
+                c5.height = height;
+                let ctx = c5.getContext('2d');
+                  canvasInterval5 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c5, ctx);
+                  }, 1000 / fps);
             }
             else if (videoPlaying) {
                 document.getElementById('take5').innerText = '重拍';
-                    let canvas = document.getElementById('canvas');
-                    canvas.width = v.videoWidth;
-                    canvas.height = v.videoHeight;
-                    canvas.getContext('2d').drawImage(v5, 0, 0);
-                    let data = canvas.toDataURL('images/webp');
-                    document.getElementById('v5').style.display = 'none';
-                document.getElementById('p5').setAttribute('src', data);
-                document.getElementById('p5').style.display = 'block'
-                }
-            }, false);
-        })();
+                clearInterval(canvasInterval5);
+                let c5 = document.getElementById('c5');
+                c5.width = width;
+                c5.height = height;
+                drawImage(v, c5.getContext('2d'));
+                data5 = c5.toDataURL('image/jpg');
+            }
+        }, false);
+    })();
 
-            var canvas = document.getElementById('canvas');
-    function uploadImage() {
-        let v = document.getElementById('v5');
-        let canvas = document.getElementById('canvas');
-        {#canvas.width = v.videoWidth;#}
-        {#canvas.height = v.videoHeight;#}
-        {#canvas.getContext('2d').drawImage(v, 0, 0);#}
-        var imgData = canvas.toDataURL("image/jpg");
+
+    {#var canvas = document.getElementById('canvas');#}
+    document.getElementById('up5').addEventListener('click', function () {
+        var imgData = data5;
+        var c5 = document.getElementById('c5');
         imgData = imgData.replace(/^data:image\/(png|jpg);base64,/, "");
         //上传到后台
         var uploadAjax = $.ajax({
@@ -571,14 +726,17 @@
             type: "POST",
             //后端需要调用的地址
             url: "../upload/",
-            data: JSON.stringify({"imgData": imgData}),
+            data: JSON.stringify({"imgData": imgData, 'id':4}),
             contentType: "json/application",
             //设置超时
             timeout: 10000,
             async: true,
             success: function (data) {
-                //成功后回调
-                alert('上传成功！')
+                 clearInterval(canvasInterval5);
+                data = JSON.parse(data);
+                color5 = data.color;
+                drawCube(c5, data.color);
+                alert('识别成功，请检查识别结果！')
             },
             error: function (data) {
             },
@@ -593,81 +751,92 @@
                 }
             }
         });
-    }
-        </script>
+    });
+
+</script>
 <script>
-        !(function () {
-            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
-            if (navigator.mediaDevices === undefined) {
-                navigator.mediaDevices = {};
-            }
-            if (navigator.mediaDevices.getUserMedia === undefined) {
-                navigator.mediaDevices.getUserMedia = function (constraints) {
-                    // 首先，如果有getUserMedia的话，就获得它
-                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    {#document.getElementById('canvas').hidden;#}
+    !(function () {
+        // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+        }
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+            navigator.mediaDevices.getUserMedia = function (constraints) {
+                // 首先，如果有getUserMedia的话，就获得它
+                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
-                    if (!getUserMedia) {
-                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-                    }
-
-                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise
-                    return new Promise(function (resolve, reject) {
-                        getUserMedia.call(navigator, constraints, resolve, reject);
-                    });
+                // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
                 }
+
+                // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                return new Promise(function (resolve, reject) {
+                    getUserMedia.call(navigator, constraints, resolve, reject);
+                });
             }
-            const constraints = {
-                video: true,
-                audio: false
+        }
+        const constraints = {
+            video: true,
+            audio: false
+        };
+        let videoPlaying = false;
+        let v = document.getElementById('v6');
+        let promise = navigator.mediaDevices.getUserMedia(constraints);
+        promise.then(stream => {
+            // 旧的浏览器可能没有srcObject
+            if ("srcObject" in v) {
+                v.srcObject = stream;
+            } else {
+                // 防止再新的浏览器里使用它，应为它已经不再支持了
+                v.src = window.URL.createObjectURL(stream);
+            }
+            v.onloadedmetadata = function (e) {
+                v.play();
+                videoPlaying = true;
+                let c6 = document.getElementById('c6');
+                c6.width = width;
+                c6.height = height;
+                let ctx = c6.getContext('2d');
+                  canvasInterval6 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                    draw(c6, ctx);
+                  }, 1000 / fps);
             };
-            let videoPlaying = false;
-            let v = document.getElementById('v6');
-            let promise = navigator.mediaDevices.getUserMedia(constraints);
-            promise.then(stream => {
-                // 旧的浏览器可能没有srcObject
-                if ("srcObject" in v) {
-                    v.srcObject = stream;
-                } else {
-                    // 防止再新的浏览器里使用它，应为它已经不再支持了
-                    v.src = window.URL.createObjectURL(stream);
-                }
-                v.onloadedmetadata = function (e) {
-                    v.play();
-                    videoPlaying = true;
-                };
-            }).catch(err => {
-                console.error(err.name + ": " + err.message);
-            })
+        }).catch(err => {
+            console.error(err.name + ": " + err.message);
+        });
 
-            document.getElementById('take6').addEventListener('click', function () {
-                if(document.getElementById('take6').innerText === '重拍'){
+        document.getElementById('take6').addEventListener('click', function () {
+            if(document.getElementById('take6').innerText === '重拍'){
                 document.getElementById('take6').innerText = '拍摄';
-                 document.getElementById('v6').style.display = 'block';
-                 document.getElementById('p6').style.display = 'none';
+                let c6 = document.getElementById('c6');
+                c6.width = width;
+                c6.height = height;
+                let ctx = c6.getContext('2d');
+                  canvasInterval6 = window.setInterval(() => {
+                    drawImage(v,ctx);
+                   draw(c6, ctx);
+                  }, 1000 / fps);
             }
             else if (videoPlaying) {
                 document.getElementById('take6').innerText = '重拍';
-                    let canvas = document.getElementById('canvas');
-                    canvas.width = v.videoWidth;
-                    canvas.height = v.videoHeight;
-                    canvas.getContext('2d').drawImage(v6, 0, 0);
-                    let data = canvas.toDataURL('images/webp');
-                    document.getElementById('v6').style.display = 'none';
-                document.getElementById('p6').setAttribute('src', data);
-                document.getElementById('p6').style.display = 'block'
-                }
-            }, false);
-        })();
+                clearInterval(canvasInterval6);
+                let c6 = document.getElementById('c6');
+                c6.width = width;
+                c6.height = height;
+                drawImage(v, c6.getContext('2d'));
+                data6 = c6.toDataURL('image/jpg');
+            }
+        }, false);
+    })();
 
-            var canvas = document.getElementById('canvas');
-    function uploadImage() {
-        let v = document.getElementById('v6');
-        let canvas = document.getElementById('canvas');
-        {#canvas.width = v.videoWidth;#}
-        {#canvas.height = v.videoHeight;#}
-        {#canvas.getContext('2d').drawImage(v, 0, 0);#}
-        var imgData = canvas.toDataURL("image/jpg");
+
+    {#var canvas = document.getElementById('canvas');#}
+    document.getElementById('up6').addEventListener('click', function () {
+        var imgData = data6;
+        var c6 = document.getElementById('c6');
         imgData = imgData.replace(/^data:image\/(png|jpg);base64,/, "");
         //上传到后台
         var uploadAjax = $.ajax({
@@ -675,14 +844,17 @@
             type: "POST",
             //后端需要调用的地址
             url: "../upload/",
-            data: JSON.stringify({"imgData": imgData}),
+            data: JSON.stringify({"imgData": imgData, 'id':5}),
             contentType: "json/application",
             //设置超时
             timeout: 10000,
             async: true,
             success: function (data) {
-                //成功后回调
-                alert('上传成功！')
+                 clearInterval(canvasInterval6);
+                data = JSON.parse(data);
+                color6 = data.color;
+                drawCube(c6, data.color);
+                alert('识别成功，请检查识别结果！')
             },
             error: function (data) {
             },
@@ -697,9 +869,52 @@
                 }
             }
         });
-    }
-        </script>
+    });
 
+</script>
+
+<link rel="stylesheet"  href="../../cube/static/css/main.css">
+<div id="button_container" class="container">
+{#			<button disabled id="scramble" type="button">Scramble</button>#}
+{#			<button disabled id="solve" type="button">Solve!</button>#}
+            <button  id="robot_solve" type="button">Robot_Solve!</button>
+		</div>
+
+<script>
+    document.getElementById('robot_solve').addEventListener('click', function () {
+        state = {'O': color3, 'B': color4, 'R': color2, 'Y': color5, 'W': color6, 'G': color1};
+        console.log(state);
+        if (confirm('请确认魔方识别状态，是否提交') == true) {
+            $.ajax({
+                url: '../upload/robot_solve/',
+                data: {"colors": JSON.stringify(state)},
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    alert(response);
+                    {#solveStartState = JSON.parse(JSON.stringify(state));#}
+                    {#solveMoves = response["moves"];#}
+                    {#solveMoves_rev = response["moves_rev"];#}
+                    {#solution_text = response["solve_text"];#}
+                    {#solution_text.push("SOLVED!");#}
+                    {#setSolnText(true);#}
+                    // disableInput();
+                    {#moves = JSON.parse(JSON.stringify(solveMoves));#}
+
+                    {#setTimeout(function(){nextState(500)}, 500);#}
+                },
+                error: function (error) {
+                    console.log(error);
+                    {#document.getElementById("solution_text").innerHTML = "...";#}
+                    // setTimeout(function(){solveCube()}, 500);
+                },
+            });
+        }
+        else{
+            alert('您已取消提交！')
+        }
+    });
+</script>
 </body>
 
 </html>
