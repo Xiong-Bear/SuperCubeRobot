@@ -36,7 +36,7 @@ kiwisolver
 Markdown==3.3.6
 MarkupSafe
 matplotlib
-
+pytorch==1.10.0
 numpy
 numpy-quaternion==2021.11.4.15.26.3
 oauthlib==3.1.1
