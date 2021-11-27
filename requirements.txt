@@ -36,7 +36,7 @@ kiwisolver
 Markdown==3.3.6
 MarkupSafe
 matplotlib
-mkl-fft==1.3.0
+mkl-fft
 mkl-random==1.1.1
 mkl-service==2.3.0
 networkx==1.8.1
