@@ -14,12 +14,12 @@
         let canvasInterval4 = null;
         let canvasInterval5 = null;
         let canvasInterval6 = null;
-        let color1 = ['x','x','x','x','x','x'];
-        let color2 = ['x','x','x','x','x','x'];
-        let color3 = ['x','x','x','x','x','x'];
-        let color4 = ['x','x','x','x','x','x'];
-        let color5 = ['x','x','x','x','x','x'];
-        let color6 = ['x','x','x','x','x','x'];
+        let color1 = ['x','x','x','x','x','x','x','x','x'];
+        let color2 = ['x','x','x','x','x','x','x','x','x'];
+        let color3 = ['x','x','x','x','x','x','x','x','x'];
+        let color4 = ['x','x','x','x','x','x','x','x','x'];
+        let color5 = ['x','x','x','x','x','x','x','x','x'];
+        let color6 = ['x','x','x','x','x','x','x','x','x'];
         let state = {'O': color3, 'B': color4, 'R': color2, 'Y': color5, 'W': color6, 'G': color1};
         let data1 = null;
         let data2 = null;
@@ -68,15 +68,15 @@
             let t = color_data[i];
             if(t == 'W')
                 color[i] = 'white';
-            if(t == 'O')
+            else if(t == 'O')
                 color[i] = 'orange';
-            if(t == 'B')
+            else if(t == 'B')
                 color[i] = 'blue';
-            if(t == 'G')
+            else if(t == 'G')
                 color[i] = 'green';
-            if(t == 'Y')
+            else if(t == 'Y')
                 color[i] = 'yellow';
-            if(t == 'R')
+            else if(t == 'R')
                 color[i] = 'red';
         }
         context.beginPath();//开始绘制线条，若不使用beginPath，则不能绘制多条线条
