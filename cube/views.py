@@ -3,7 +3,7 @@ import json
 import os
 import time
 import urllib.parse
-
+# import serial
 import cv2
 import numpy
 from django.http import HttpResponse
@@ -172,6 +172,7 @@ def robot_solve(request):
                 else:
                     robot.append(v)
             result['robot_solve_text'] = robot
+            print(robot)
             print("result robot form:", result)
             return HttpResponse(json.dumps(result))
         else:
