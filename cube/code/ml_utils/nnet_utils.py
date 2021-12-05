@@ -147,7 +147,7 @@ def getModelName(args):
 
 def addNnetArgs(parser):
     parser.add_argument('--env', type=str, default='cube3', help="Environment: cube3, cube4, puzzle15, puzzle24")
-    parser.add_argument('--solve_itrs', type=int, default=5000, help="How often to test")
+    parser.add_argument('--solve_itrs', type=int, default=5000, help="How often to tests")
 
     # Architecture
     parser.add_argument('--num_l', type=int, default=1, help="Number of hidden layers")
@@ -202,7 +202,7 @@ def addNnetArgs(parser):
 
     parser.add_argument('--model_num', type=int, default=0, help="Model number for progressive learning")
 
-    parser.add_argument('--eps', type=float, default=None, help="Training stops if test set falls below specified error for supervised training. Default is none, meaning no early stopping due to this argument.")
+    parser.add_argument('--eps', type=float, default=None, help="Training stops if tests set falls below specified error for supervised training. Default is none, meaning no early stopping due to this argument.")
 
     return(parser)
 

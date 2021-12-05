@@ -1,4 +1,3 @@
-
 var state = [];
 var rotateIdxs_old = null;
 var rotateIdxs_new = null;
@@ -186,7 +185,6 @@ function nextState(moveTimeout=0) {
 
 		//swap stickers
 		for (var i = 0; i < rotateIdxs_new[move].length; i++) {
-		// for (var i = 0; i < 4; i++) {
 			newState_rep[rotateIdxs_new[move][i]] = state_rep[rotateIdxs_old[move][i]]
 		}
 
@@ -260,7 +258,7 @@ function solveCube() {
 		},
 		error: function(error) {
 				console.log(error);
-				// document.getElementById("solution_text").innerHTML = "..."
+				document.getElementById("solution_text").innerHTML = "..."
 				// setTimeout(function(){solveCube()}, 500);
 		},
 	});
@@ -508,3 +506,4 @@ function mouseMoved(ev) {
 
   $("#cube").css("transform", "translateZ( -100px) rotateX( " + rotX + "deg) rotateY(" + rotY + "deg)");
 }
+

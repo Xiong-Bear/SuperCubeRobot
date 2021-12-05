@@ -14,6 +14,7 @@
         let canvasInterval4 = null;
         let canvasInterval5 = null;
         let canvasInterval6 = null;
+        let is_color_filled = [false, false, false, false, false, false];
         let color1 = ['x','x','x','x','x','x','x','x','x'];
         let color2 = ['x','x','x','x','x','x','x','x','x'];
         let color3 = ['x','x','x','x','x','x','x','x','x'];
@@ -231,6 +232,7 @@
         document.getElementById('take1').addEventListener('click', function () {
             if(document.getElementById('take1').innerText === '重拍'){
                 document.getElementById('take1').innerText = '拍摄';
+                is_color_filled[0] = false;
                 let c1 = document.getElementById('c1');
                 c1.width = width;
                 c1.height = height;
@@ -276,6 +278,7 @@
                 clearInterval(canvasInterval1);
                 data = JSON.parse(data);
                 color1 = data.color;
+                is_color_filled[0] = true;
                 drawCube(c1, data.color);
                 alert('识别成功，请检查识别结果！')
             },
@@ -352,6 +355,7 @@
         document.getElementById('take2').addEventListener('click', function () {
             if(document.getElementById('take2').innerText === '重拍'){
                 document.getElementById('take2').innerText = '拍摄';
+                is_color_filled[1] = false;
                 let c2 = document.getElementById('c2');
                 c2.width = width;
                 c2.height = height;
@@ -394,6 +398,7 @@
                  clearInterval(canvasInterval2);
                 data = JSON.parse(data);
                 color2 = data.color;
+                is_color_filled[1] = true;
                 drawCube(c2, data.color);
                 alert('识别成功，请检查识别结果！')
             },
@@ -470,6 +475,7 @@
         document.getElementById('take3').addEventListener('click', function () {
             if(document.getElementById('take3').innerText === '重拍'){
                 document.getElementById('take3').innerText = '拍摄';
+                is_color_filled[2] = false;
                 let c3 = document.getElementById('c3');
                 c3.width = width;
                 c3.height = height;
@@ -511,6 +517,7 @@
                 clearInterval(canvasInterval3);
                 data = JSON.parse(data);
                 color3 = data.color;
+                is_color_filled[2] = true;
                 drawCube(c3, data.color);
                 alert('识别成功，请检查识别结果！')
             },
@@ -587,6 +594,7 @@
         document.getElementById('take4').addEventListener('click', function () {
             if(document.getElementById('take4').innerText === '重拍'){
                 document.getElementById('take4').innerText = '拍摄';
+                is_color_filled[3] = false;
                 let c4 = document.getElementById('c4');
                 c4.width = width;
                 c4.height = height;
@@ -629,6 +637,7 @@
                 clearInterval(canvasInterval4);
                 data = JSON.parse(data);
                 color4 = data.color;
+                is_color_filled[3] = true;
                 drawCube(c4, data.color);
                 alert('识别成功，请检查识别结果！')
             },
@@ -706,6 +715,7 @@
         document.getElementById('take5').addEventListener('click', function () {
             if(document.getElementById('take5').innerText === '重拍'){
                 document.getElementById('take5').innerText = '拍摄';
+                is_color_filled[4] = false;
                 let c5 = document.getElementById('c5');
                 c5.width = width;
                 c5.height = height;
@@ -748,6 +758,7 @@
                  clearInterval(canvasInterval5);
                 data = JSON.parse(data);
                 color5 = data.color;
+                is_color_filled[4] = true;
                 drawCube(c5, data.color);
                 alert('识别成功，请检查识别结果！')
             },
@@ -824,6 +835,7 @@
         document.getElementById('take6').addEventListener('click', function () {
             if(document.getElementById('take6').innerText === '重拍'){
                 document.getElementById('take6').innerText = '拍摄';
+                is_color_filled[5] = false;
                 let c6 = document.getElementById('c6');
                 c6.width = width;
                 c6.height = height;
@@ -866,6 +878,7 @@
                  clearInterval(canvasInterval6);
                 data = JSON.parse(data);
                 color6 = data.color;
+                is_color_filled[5] = true;
                 drawCube(c6, data.color);
                 alert('识别成功，请检查识别结果！')
             },
@@ -890,8 +903,16 @@
     document.getElementById('robot_solve').addEventListener('click', function () {
         state = {'O': color3, 'B': color4, 'R': color2, 'Y': color5, 'W': color6, 'G': color1};
         console.log(state);
+        {#let is_finish = false;#}
+        for (let i = 0; i < 6; i++) {
+            if (is_color_filled[i] == false){
+                alert('请全部识别完成再提交！');
+                return
+            }
+            {#is_finish = true;#}
+        }
         let robot = document.getElementById('robot_solve_steps');
-        if (confirm('请确认魔方识别状态，是否提交') == true) {
+        if (confirm('请确认魔方识别状态，是否提交') == true ) {
             robot.innerText = 'Solving...';
             $.ajax({
                 url: '../upload/robot_solve/',

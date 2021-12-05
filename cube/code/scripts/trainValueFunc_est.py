@@ -138,7 +138,7 @@ scrambleTests = range(scrambleRange[0],scrambleRange[1]+1)
 if args.scramb_max - args.scramb_min > 30:
     scrambleTests = np.linspace(args.scramb_min,args.scramb_max,30,dtype=np.int)
 
-print("Scramble test distances are %s" % (scrambleTests))
+print("Scramble tests distances are %s" % (scrambleTests))
 
 assert(args.mom_f >= args.mom_i)
 assert(args.mom_c_s >= 1)

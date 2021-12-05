@@ -14,7 +14,7 @@ urlpatterns = [
     path('basic/solve/', basic_solve, name='basic_solve'),
     path('upload/', upload, name='upload'),
     path('upload/robot_solve/', robot_solve, name='robot_solve'),
-    path('test/', test, name='test'),
+    path('tests/', test, name='tests'),
 
 ]
 

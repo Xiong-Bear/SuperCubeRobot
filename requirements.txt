@@ -1,3 +1,4 @@
+pytest
 absl-py==0.15.0
 asgiref==3.4.1
 astor==0.8.1
