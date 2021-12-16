@@ -9,7 +9,7 @@ import numpy
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
 from cube.cfop.CFOPsolver import CubeSolver
 from cube.parse import graph, dataParse
 from .tools import getResults
@@ -30,6 +30,12 @@ def test(request):
 
 def basic(request):
     return render(request, 'cube/basic.html')
+
+
+def video(request):
+    # video_url = settings.MEDIA_ROOT + 'software.mp4'
+    # return render(request, 'cube/video.html', {'url': video_url})
+    return render(request, 'cube/video.html')
 
 
 @csrf_exempt

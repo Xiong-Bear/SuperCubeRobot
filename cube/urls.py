@@ -7,6 +7,7 @@ from django.conf import settings
 urlpatterns = [
     path('', index, name='index'),
     path('advance/', advance, name='advance'),
+    path('video/', video, name='video'),
     path('advance/initState/', initState, name='advance_initState'),
     path('advance/solve/', solve, name='advance_solve'),
     path('basic/', basic, name='basic'),
